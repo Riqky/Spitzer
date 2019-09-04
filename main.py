@@ -1,26 +1,52 @@
 import cmd
+from exploiters import web
 from scanner import scanner
-import smb
+from config import config
+import subprocess, shlex
 
-#TODO create config file
-#TODO create settings system
+#TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
 class command(cmd.Cmd):
-    intro = 'SMBMapper'
-    prompt = 'map > '
+    intro = 'First Scanner'
+    prompt = '> '
 
-    #TODO not only smb
-    #def do_scan(self, arg):
+    def do_all(self, arg):
+        #TODO scan, exploit for all 'modules'
+        #TODO make a list of exploits, for dynamic looping
+        i=0#error stopper (fucking python)
 
+    def do_scan(self, arg):
+        #TODO only scan
+        i=0#...
 
-    def do_smb(self, arg):
-        hosts = scanner.scanSMB(arg)
-        if hosts is not None:
-            smb.exploit(hosts)
-        else:
-            print('None of the specified hosts is up or runnnig smb')
+    def do_exploit(self, arg):
+        #web.exploit(config.getDynamic('ip'))
+        #TODO as said, make a list of exploits
+
+        #for calling a dynamic method at runtime
+        #result = getattr(module, 'method')('params')
+
+        i=0#ugh
             
+    def do_info(self, arg):
+        config.printFile()
 
+    def do_set(self, arg):
+        args = arg.split(' ')
+        config.setValue(args)
+
+    def do_shell(self, arg):
+        try:
+            subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\_(-_-)_/¯
+            print()
+        except FileNotFoundError:
+            print('command not found')
+
+    def do_print(self,arg):
+        if arg is '':
+            config.printConfig()
+        else:
+            config.printConfig(arg)
 
 
 

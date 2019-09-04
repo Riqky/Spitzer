@@ -1,27 +1,44 @@
-from scanner import nmapper, masscanner
+from config import config
 from chache import chache
-from IPy import IP
+from scanner import masscanner
+from scanner import nmapper
+import host
 
-def sweep(hosts, port):
-    masscanner.sweep(hosts, port)
-    xml = chache.readFile('sweep.xml')
+#TODO! scan only once on to much hosts or to big range, cause this method is shit....
+def scan(hosts):
+    port = config.getStatic('ports')
 
-    if xml is '':
-        return
+    ports = ''
+    for p in port:
+        ports += p + ','
 
-    result = nmapper.parseXml(xml)
+    ports = ports[:-1] #remove last comma
 
-    hosts = ''
-    for host in result['scan']:
-        hosts += ' ' + host
+    #run masscan twice (multithreaded)
+    masscanner.scan()
 
-    return hosts
+    #get results from masscan and create one list of hosts with ports
+    xml1 = chache.readFile('sweep1.xml')
+    xml2 = chache.readFile('sweep2.xml')
 
-def scanSMB(hosts):
-    #TODO maybe check if there are to much hosts
-    
-    hosts = sweep(hosts, '445')
-    if hosts is None:
-        return
+    #complete fail if both scan failed
+    if xml1 is '' and xml2 is '':
+        raise RuntimeError('both masscans failed')
 
-    return nmapper.scanSMB(hosts)
+    #don't have to merge when one scan failed
+    if xml1 is '':
+        print('masscan 1 failed, continuing')
+        return nmapper.scan(host.extractHosts(nmapper.parseXml(chache.readFile('sweep1.xml'))))
+    elif xml2 is '':
+        print('masscan 2 failed, continuing')
+        return nmapper.scan(host.extractHosts(nmapper.parseXml(chache.readFile('sweep2.xml'))))
+
+    mass1 = nmapper.parseXml(chache.readFile('sweep1.xml'))
+    mass2 = nmapper.parseXml(chache.readFile('sweep2.xml'))
+
+    hosts = host.merge(mass1, mass2)
+
+    #run nmap once to confirm scan (masscan has some false positives)
+    return nmapper.scan(hosts)
+
+

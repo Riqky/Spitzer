@@ -1,0 +1,9 @@
+{
+    "ports":{
+        "445":"microsoft-ds",
+        "80":"http",
+        "443":"https"
+    },
+    "zapApiKey":"5da2coj05goiavhri54hf958gn",
+    "interface":"tun0"
+}
