@@ -3,6 +3,7 @@ from exploiters import web
 from scanner import scanner
 from config import config
 import subprocess, shlex
+import time
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
@@ -16,8 +17,14 @@ class command(cmd.Cmd):
         i=0#error stopper (fucking python)
 
     def do_scan(self, arg):
-        #TODO only scan
-        i=0#...
+        result = scanner.scan(arg)
+
+        for host, value in result.items():
+            print(host + ':')
+            for port, portVal in value['tcp'].items():
+                if portVal['state'] == 'open':
+                    print('\t' + str(port) + '  ' + portVal['name'])
+            print()
 
     def do_exploit(self, arg):
         #web.exploit(config.getDynamic('ip'))

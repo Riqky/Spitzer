@@ -1,8 +1,8 @@
 def extractHosts(mass):
     result = {}
-    for host in mass['scan']:
+    for host, value in mass['scan'].items():
         ports = []
-        for port in host['tcp']:
+        for port in value['tcp']:
             ports.append(port)
 
         result[host] = ports
@@ -14,8 +14,7 @@ def merge(mass1, mass2):
     result2 = extractHosts(mass2)
     missed = {}
 
-    #TODO? kill it with fire... lots and lots of fire
-    #I truly am sorry for this code >_<
+    #TODO? optimise, this code must be able to wirstand 16 millions ip's (maybe)
     #merge the list of hosts and ports
 
     for host, ports in result1.items():
@@ -38,5 +37,3 @@ def merge(mass1, mass2):
             result[host] = ports
 
     return result
-
-    

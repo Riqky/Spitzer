@@ -4,17 +4,27 @@ nm = nmap.PortScanner()
 
 #TODO maybe change this for big networks
 def scan(hosts):
+    print('starting nmap')
     result = {}
-    for host, ports in hosts.items():
-        nm.scan(host, ports, sudo=True)
-        result[host] = nm._nmap_last_output['scan'][host]
+    for host, ports in hosts.items():             #arguments='-sV --script=nfs-showmount'
+        result[host] = nm.scan(host, stringifyPorts(ports), sudo=True)['scan'][host]
 
+    print('nmap done')
     return result
 
 
 def parseXml(xml):
+    #print('xml: ' + xml)
     result = nm.analyse_nmap_xml_scan(xml)
     if 'error' in result['nmap']['scaninfo']:
         print(result['nmap']['scaninfo']['error'])
         raise RuntimeError
     return result
+
+def stringifyPorts(ports):
+
+    port = ''
+    for p in ports:
+        port += str(p) + ','
+
+    return port[:-1]

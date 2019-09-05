@@ -10,12 +10,12 @@ def scan(hosts):
 
     ports = ''
     for p in port:
-        ports += p + ','
+        ports += str(p) + ','
 
     ports = ports[:-1] #remove last comma
 
     #run masscan twice (multithreaded)
-    masscanner.scan()
+    masscanner.scan(hosts, ports)
 
     #get results from masscan and create one list of hosts with ports
     xml1 = chache.readFile('sweep1.xml')

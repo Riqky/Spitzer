@@ -1,6 +1,7 @@
 import subprocess
 import threading
 from config import config
+import command
 
 def scan(hosts, ports):
     thread1 = sweepThread(1, hosts, ports, "sweep1.xml")
@@ -22,5 +23,7 @@ class sweepThread(threading.Thread):
         self.config = config
 
     def run(self):
-        #TODO specify interface out of config
-        subprocess.run(['masscan', self.hosts,'-oX', 'chache/' + self.config, '-p ' + self.ports, '-e', config.getStatic('interface'), '--wait=0'], capture_output=True, check=True)
+        print('started masscan ' + str(self.threadID))
+        cmd = ['masscan', self.hosts,'-oX', 'chache/' + self.config, '-p ' + self.ports, '-e', config.getStatic('interface'), '--wait=0']
+        command.run(cmd, True)
+        print('finished masscan ' + str(self.threadID))

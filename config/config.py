@@ -10,13 +10,27 @@ dynamic = json.loads(dynamic)
 
 def getStatic(key):
     try:
-        return static[key]
+        value = static[key]
+        if value == 'True':
+            return True
+        elif value == 'False':
+            return False
+        else:
+            return value
+        
     except KeyError:
         return None
 
 def getDynamic(key):
     try:
-        return dynamic[key]
+        value = dynamic[key]
+        if value == 'True':
+            return True
+        elif value == 'False':
+            return False
+        else:
+            return value
+
     except KeyError:
         return None
 

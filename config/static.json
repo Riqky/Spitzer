@@ -2,8 +2,17 @@
     "ports":{
         "445":"microsoft-ds",
         "80":"http",
-        "443":"https"
+        "443":"https",
+        "22": "ssh",
+        "2049":"nfs"
     },
     "zapApiKey":"5da2coj05goiavhri54hf958gn",
-    "interface":"tun0"
+    "interface":"tun0",
+    "enableOutput":"True",
+    "dirbPath": {
+        "common": "/usr/share/dirb/wordlists/common.txt",
+        "big": "/usr/share/dirb/wordlists/big.txt",
+        "apache": "/usr/share/dirp/worlists/vulns/apache.txt",
+        "test": "/root/test.txt"
+    }
 }
