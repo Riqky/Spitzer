@@ -1,14 +1,7 @@
 {
-    "ports":{
-        "445":"microsoft-ds",
-        "80":"http",
-        "443":"https",
-        "22": "ssh",
-        "2049":"nfs"
-    },
-    "zapApiKey":"5da2coj05goiavhri54hf958gn",
-    "interface":"tun0",
-    "enableOutput":"True",
+    "zapApiKey": "5da2coj05goiavhri54hf958gn",
+    "interface": "tun0",
+    "enableOutput": "True",
     "dirbPath": {
         "common": "/usr/share/dirb/wordlists/common.txt",
         "big": "/usr/share/dirb/wordlists/big.txt",

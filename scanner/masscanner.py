@@ -4,14 +4,24 @@ from config import config
 import command
 
 def scan(hosts, ports):
-    thread1 = sweepThread(1, hosts, ports, "sweep1.xml")
+    '''thread1 = sweepThread(1, hosts, ports, "sweep1.xml")
     thread2 = sweepThread(2, hosts, ports, "sweep2.xml")
 
     thread1.start()
     thread2.start()
 
     thread1.join()
-    thread2.join()
+    thread2.join()'''
+
+    print('started masscan 1')
+    cmd = ['masscan', hosts,'-oX', 'chache/sweep1.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0']
+    command.run(cmd, True)
+    print('finished masscan 1')
+
+    print('started masscan 2')
+    cmd = ['masscan', hosts,'-oX', 'chache/sweep2.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0']
+    command.run(cmd, True)
+    print('finished masscan 2')
 
 
 class sweepThread(threading.Thread):

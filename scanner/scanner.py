@@ -6,7 +6,7 @@ import host
 
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....
 def scan(hosts):
-    port = config.getStatic('ports')
+    port = config.getData('ports')
 
     ports = ''
     for p in port:

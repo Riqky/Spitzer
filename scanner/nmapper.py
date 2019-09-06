@@ -1,4 +1,6 @@
 import nmap
+from config import config
+import os
 
 nm = nmap.PortScanner()
 
@@ -7,14 +9,13 @@ def scan(hosts):
     print('starting nmap')
     result = {}
     for host, ports in hosts.items():             #arguments='-sV --script=nfs-showmount'
-        result[host] = nm.scan(host, stringifyPorts(ports), sudo=True)['scan'][host]
+        result[host] = nm.scan(host, stringifyPorts(ports), arguments=config.getDynamic('nmapFlags') + ' oA=' + os.getcwd() + 'scan', sudo=True)['scan'][host]
 
     print('nmap done')
     return result
 
 
 def parseXml(xml):
-    #print('xml: ' + xml)
     result = nm.analyse_nmap_xml_scan(xml)
     if 'error' in result['nmap']['scaninfo']:
         print(result['nmap']['scaninfo']['error'])

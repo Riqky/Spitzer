@@ -1,12 +1,15 @@
 import json
 
-#TODO create .ini file for ports, services and exploit (and alike)
+#TODO? create .json file for ports, services and exploit (and alike)
 
 static = open('config/static.json', 'r').read()
 static = json.loads(static)
 
 dynamic = open('config/dynamic.json', 'r').read()
 dynamic = json.loads(dynamic)
+
+data = open('config/data.json', 'r').read()
+data = json.loads(data)
 
 def getStatic(key):
     try:
@@ -18,6 +21,12 @@ def getStatic(key):
         else:
             return value
         
+    except KeyError:
+        return None
+
+def getData(key):
+    try: 
+        return data[key]
     except KeyError:
         return None
 
@@ -48,8 +57,12 @@ def printConfig(name='dynamic'):
     elif name == 'static':
        printdict(static)
     elif name == 'all':
+        print('dynamic')
+        print('====================================================================\n')
         printdict(dynamic)
-        printdict('\n')
+        print('\n')
+        print('static')
+        print('====================================================================\n')
         printdict(static)
     else:
         print('invalid type')
@@ -58,20 +71,22 @@ def printConfig(name='dynamic'):
 def printdict(diction):
     for key, value in diction.items():
             if isinstance(value, dict):
-                print(key)
-                print('=========================')
+                print('\n' + key)
+                print('=====================================')
                 printdict(value)
             else:    
-                print(str(key) + ' : ' + str(value))
+                spaces = 20*' '
+                spaces = spaces[-len(str(value)):]
+                print("%-30s %-40s" % (str(key), str(value)))
     print()
 
 def setValue(args):
     key = args[0]
     value = args[1]
 
-    if getDynamic(key) is not None:
+    if key in dynamic:
         setDynamic(key, value)
-    elif getStatic(key) is not None:
+    elif key in static:
         setStatic(key, value)
     else:
         print('key not found')
