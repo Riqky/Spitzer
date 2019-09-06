@@ -11,11 +11,6 @@ class command(cmd.Cmd):
     intro = 'First Scanner'
     prompt = '> '
 
-    def do_all(self, arg):
-        #TODO scan, exploit for all 'modules'
-        #TODO make a list of exploits, for dynamic looping
-        i=0#error stopper (fucking python)
-
     def do_scan(self, arg):
         result = scanner.scan(arg)
 
@@ -26,17 +21,6 @@ class command(cmd.Cmd):
                     print('\t' + str(port) + '  ' + portVal['name'])
             print()
 
-    def do_exploit(self, arg):
-        #web.exploit(config.getDynamic('ip'))
-        #TODO as said, make a list of exploits
-
-        #TODO found out how you call modules dynamic by string
-        #this is going to be a difficult one
-         
-        #for calling a dynamic method at runtime
-        #getattr(netdisk, 'smb')('10.10.10.140')
-
-        i=0#ugh
             
     def do_info(self, arg):
         if arg is '':
