@@ -3,6 +3,8 @@ import threading
 from config import config
 import command
 
+#runs masscanner twice and writes the output into a xml file in the chache folder
+
 def scan(hosts, ports):
     '''thread1 = sweepThread(1, hosts, ports, "sweep1.xml")
     thread2 = sweepThread(2, hosts, ports, "sweep2.xml")

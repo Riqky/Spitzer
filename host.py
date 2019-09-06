@@ -1,3 +1,5 @@
+#to extract the xml files and merge them to one list of hosts
+
 def extractHosts(mass):
     result = {}
     for host, value in mass['scan'].items():

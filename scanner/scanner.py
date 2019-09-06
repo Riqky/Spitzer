@@ -4,6 +4,8 @@ from scanner import masscanner
 from scanner import nmapper
 import host
 
+#scanner class to combine the nmap and the masscanner class
+
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....
 def scan(hosts):
     port = config.getData('ports')

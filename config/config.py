@@ -1,5 +1,7 @@
 import json
 
+#handler for the three config files, every setting can the changed here
+
 #TODO? create .json file for ports, services and exploit (and alike)
 
 static = open('config/static.json', 'r').read()

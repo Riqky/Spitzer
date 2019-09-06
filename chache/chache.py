@@ -1,3 +1,7 @@
+#chache folder
+#this is for temporary files used by the program
+#(should be cleared after the program is done)
+
 #TODO clear chache after exit
 
 def createFile(name, content=''):

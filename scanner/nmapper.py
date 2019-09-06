@@ -2,6 +2,8 @@ import nmap
 from config import config
 import os
 
+#runs nmap, not much further to say...
+
 nm = nmap.PortScanner()
 
 #TODO maybe change this for big networks

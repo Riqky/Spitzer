@@ -12,6 +12,7 @@ class command(cmd.Cmd):
     prompt = '> '
 
     def do_scan(self, arg):
+        '''runs only scanner on the ip(s) given in the config'''
         result = scanner.scan(arg)
 
         for host, value in result.items():
@@ -23,16 +24,19 @@ class command(cmd.Cmd):
 
             
     def do_info(self, arg):
+        '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''
         if arg is '':
             config.printConfig()
         else:
             config.printConfig(arg)
 
     def do_set(self, arg):
+        '''set the value by the given key'''
         args = arg.split(' ')
         config.setValue(args)
 
     def do_shell(self, arg):
+        '''runs a shell command (!<command> can also be used)'''
         if arg == '': return
         try:
             subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\_(-_-)_/¯
