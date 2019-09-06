@@ -1,9 +1,9 @@
 import cmd
-from exploiters import web, netdisk
 from scanner import scanner
 from config import config
 import subprocess, shlex
 import time 
+import os
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
@@ -13,14 +13,16 @@ class command(cmd.Cmd):
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
-        result = scanner.scan(arg)
+        result = scanner.scan(config.getDynamic('ip'))
 
+        #print result (mainl for testing)
         for host, value in result.items():
             print(host + ':')
             for port, portVal in value['tcp'].items():
                 if portVal['state'] == 'open':
                     print('\t' + str(port) + '  ' + portVal['name'])
             print()
+        print('output has been written to ' + os.getcwd() + 'scan.txt')
 
             
     def do_info(self, arg):

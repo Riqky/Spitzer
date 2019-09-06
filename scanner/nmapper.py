@@ -11,9 +11,8 @@ def scan(hosts):
     print('starting nmap')
     result = {}
     for host, ports in hosts.items():             #arguments='-sV --script=nfs-showmount'
-        result[host] = nm.scan(host, stringifyPorts(ports), arguments=config.getDynamic('nmapFlags') + ' oA=' + os.getcwd() + 'scan', sudo=True)['scan'][host]
+        result[host] = nm.scan(host, stringifyPorts(ports), arguments=config.getDynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan.txt', sudo=True)['scan'][host]
 
-    print('nmap done')
     return result
 
 
