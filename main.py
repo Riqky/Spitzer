@@ -13,7 +13,7 @@ class command(cmd.Cmd):
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
-        result = scanner.scan(config.getDynamic('ip'))
+        result = scanner.scan()
 
         #print result (mainl for testing)
         for host, value in result.items():
@@ -22,7 +22,7 @@ class command(cmd.Cmd):
                 if portVal['state'] == 'open':
                     print('\t' + str(port) + '  ' + portVal['name'])
             print()
-        print('output has been written to ' + os.getcwd() + 'scan.txt')
+        print('output has been written to ' + os.getcwd() + '/scan.txt')
 
             
     def do_info(self, arg):
