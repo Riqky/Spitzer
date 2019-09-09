@@ -1,12 +1,39 @@
 {
-    "ports":{
-        "445":"microsoft-ds",
-        "80":"http",
-        "443":"https",
+    "ports": {
+        "21": "ftp",
         "22": "ssh",
-        "2049":"nfs"
+        "23": "telnet",
+        "25": "SMTP",
+        "69": "TFTP",
+        "80": "HTTP",
+        "88": "Kerberos",
+        "110": "pop3",
+        "111": "rpcbind",
+        "119": "NNTP",
+        "135": "MSRPC",
+        "139": "SMB",
+        "143": "IMAP",
+        "161": "SNMP",
+        "162": "SNMP",
+        "199": "Smux",
+        "389": "Ldap",
+        "443": "HTTPs",
+        "445": "SMB",
+        "554": "RTSP",
+        "587": "Submission",
+        "631": "Cups",
+        "636": "Ldap",
+        "993": "IMAP",
+        "995": "Pop3 Encrypted",
+        "1433": "MSSQL",
+        "1521": "OracleBD",
+        "2049": "NFS",
+        "3306": "MySQL",
+        "3389": "RDP",
+        "5900": "VNC",
+        "8080": "Tomcat"
     },
-    "exploits":{
-        "":""
+    "exploits": {
+        "": ""
     }
 }

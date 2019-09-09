@@ -1,4 +1,4 @@
-def extractHosts(mass):
+def extractHostsNmap(mass):
     result = {}
     for host, value in mass['scan'].items():
         ports = []
@@ -9,9 +9,22 @@ def extractHosts(mass):
 
     return result
 
+def extractHostsXML(mass):
+    result = {}
+    for hosts in mass['nmaprun']['host']:
+        host = hosts['address']['addr']
+        port = hosts['ports']['port']['portid']
+
+        if host in result:
+            result[host].append(port)
+        else:
+            result[host] = [port]
+
+    return result
+
 def merge(mass1, mass2):
-    result1 = extractHosts(mass1)
-    result2 = extractHosts(mass2)
+    result1 = extractHostsXML(mass1)
+    result2 = extractHostsXML(mass2)
     missed = {}
 
     #TODO? optimise, this code must be able to wirstand 16 millions ip's (maybe)

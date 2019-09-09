@@ -17,7 +17,7 @@ class command(cmd.Cmd):
         i=0#error stopper (fucking python)
 
     def do_scan(self, arg):
-        result = scanner.scan(arg)
+        result = scanner.scan()
 
         for host, value in result.items():
             print(host + ':')
