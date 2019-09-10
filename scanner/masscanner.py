@@ -15,13 +15,15 @@ def scan(hosts, ports):
 
     print('started masscan 1')
     cmd = ['masscan', hosts,'-oX', 'chache/sweep1.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0']
-    command.run(cmd, True)
+    one = command.run(cmd, True)
     print('finished masscan 1')
 
     print('started masscan 2')
     cmd = ['masscan', hosts,'-oX', 'chache/sweep2.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0']
-    command.run(cmd, True)
+    two = command.run(cmd, True)
     print('finished masscan 2')
+
+    return [one.stdout, two.stdout] #TODO? restart when one fails
 
 
 class sweepThread(threading.Thread):

@@ -1,6 +1,10 @@
 {
-    "ports": {
-        "21": "ftp",
+    "ports":{
+        "21":"ftp-anon"
+    },
+
+    "ports-": {
+        "21": "ftp-anon",
         "22": "ssh",
         "23": "telnet",
         "25": "SMTP",
@@ -33,7 +37,7 @@
         "5900": "VNC",
         "8080": "Tomcat"
     },
-    "exploits": {
-        "": ""
-    }
+    "modules": [
+        "ftp"
+    ]
 }

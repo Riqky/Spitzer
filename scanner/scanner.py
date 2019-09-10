@@ -18,12 +18,11 @@ def scan():
     ports = ports[:-1] #remove last comma
 
     #run masscan twice (multithreaded)
-    masscanner.scan(hosts, ports)
+    massresult = masscanner.scan(hosts, ports)
 
     #get results from masscan and create one list of hosts with ports
     xml1 = chache.readFile('sweep1.xml')
     xml2 = chache.readFile('sweep2.xml')
-
     #complete fail if both scan failed
     if xml1 is '' and xml2 is '':
         raise RuntimeError('both masscans failed')
@@ -31,10 +30,12 @@ def scan():
     #don't have to merge when one scan failed
     if xml1 is '':
         print('masscan 1 failed, continuing')
-        return nmapper.scan(host.extractHosts(xmltodict.parse(xml1)))
+        print(massresult[0])
+        return nmapper.scan(host.extractHostsXML(json.loads(json.dumps(xmltodict.parse(xml2, attr_prefix='')))))
     elif xml2 is '':
         print('masscan 2 failed, continuing')
-        return nmapper.scan(host.extractHosts(xmltodict.parse(xml1)))
+        print(massresult[1])
+        return nmapper.scan(host.extractHostsXML(json.loads(json.dumps(xmltodict.parse(xml1, attr_prefix='')))))
 
     mass1 = json.loads(json.dumps(xmltodict.parse(xml1, attr_prefix='')))
     mass2 = json.loads(json.dumps(xmltodict.parse(xml2, attr_prefix='')))

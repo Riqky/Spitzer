@@ -1,23 +1,26 @@
 import cmd
-from exploiters import web, netdisk
+from exploiters import *
 from scanner import scanner
 from config import config
 import subprocess, shlex
 import time 
+import importlib
+import json
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
 class command(cmd.Cmd):
     intro = 'First Scanner'
     prompt = '> '
+    result = {}
 
     def do_all(self, arg):
-        #TODO scan, exploit for all 'modules'
-        #TODO make a list of exploits, for dynamic looping
-        i=0#error stopper (fucking python)
+        self.do_scan('')
+        self.do_exploit('')
 
     def do_scan(self, arg):
         result = scanner.scan()
+        self.result = result
 
         for host, value in result.items():
             print(host + ':')
@@ -27,16 +30,9 @@ class command(cmd.Cmd):
             print()
 
     def do_exploit(self, arg):
-        #web.exploit(config.getDynamic('ip'))
-        #TODO as said, make a list of exploits
-
-        #TODO found out how you call modules dynamic by string
-        #this is going to be a difficult one
-         
-        #for calling a dynamic method at runtime
-        #getattr(netdisk, 'smb')('10.10.10.140')
-
-        i=0#ugh
+        modules = config.getData('modules')
+        for module in modules:
+            eval(module + '.exploit(\''+ config.getDynamic('ip') +'\', ' + json.dumps(self.result) + ')')
             
     def do_info(self, arg):
         if arg is '':
