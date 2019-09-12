@@ -10,7 +10,8 @@ def scan(hosts):
     result = {}
     for host, ports in hosts.items():
         script = findScripts(ports)
-        result[host] = nm.scan(host, stringifyPorts(ports), arguments=config.getDynamic('nmapFlags') + ' oN' + os.getcwd() + '/scan.txt -Pn -sV --script="' + script + '"', sudo=True)['scan'][host]
+        arguments = config.getDynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan.txt -Pn -sV --script="' + script + '"' #TODO make print with selected verbosity
+        result[host] = nm.scan(host, stringifyPorts(ports), arguments=arguments, sudo=True)['scan'][host] 
     print('nmap done')
     return result
 
@@ -41,6 +42,8 @@ def findScripts(ports):
     scripts = config.getData('ports')
 
     for port in ports:
-        result += scripts[port] + ','
+        if len(scripts[port]) > 1:
+            if scripts[port][1] != '':
+                result += scripts[port][1] + ','
 
     return result[:-1]

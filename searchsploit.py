@@ -1,23 +1,30 @@
 import command
 
-def find(product, version):
-        #check for searchslpoit modules
-    result = command.run(['searchsploit', product, version], True)
-    result = result.stdout
+def find(host, nmap):
+    for port, value in nmap[host]['tcp'].items():
+        product = value['product']
+        version = value['version']
 
-    #found no sploits
-    if 'Exploits: No Result'in result and 'Shellcodes: No Result' in result:
-        return
+        #check if one is empty
+        if product == '' or version == '':
+            return
 
-    #count found sploits
-    count = 0
-    for line in result.splitlines():
-        line = line.split('|')
-        if product in line[0] or version in line[0]:
-            count += 1
+        result = command.run(['searchsploit', product, version], True)
+        result = result.stdout
 
-    s = ''
-    if count > 1:
-        s = 's'
+        #found no sploits
+        if 'Exploits: No Result'in result and 'Shellcodes: No Result' in result:
+            return
 
-    print('found ' + str(count) + ' exploit' + s + ' for ' + product + ' ' + version)
+        #count found sploits
+        count = 0
+        for line in result.splitlines():
+            line = line.split('|')
+            if product in line[0] or version in line[0]:
+                count += 1
+
+        s = ''
+        if count > 1:
+            s = 's'
+
+        print('found ' + str(count) + ' exploit' + s + ' for ' + product + ' ' + version +' on ' + host)

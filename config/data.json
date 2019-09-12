@@ -1,7 +1,29 @@
 {
     "ports":{
-        "21":"ftp-anon"
+        "21":["ftp", "ftp-anon"],
+        "22":[""],
+        "23":[""],
+        "25":[""],
+        "80":["webs"],
+        "111":["netdisk", "nfs-showmount"],
+        "139":["netdisk"],
+    	"443":["webs"],        
+        "445":["netdisk"]
+        
     },
+
+    "web":[
+        "dirbuster",
+        "nikto",
+        "testssl",
+        "zap"
+    ],
+
+    "zap":[
+        "spider",
+        "scan",
+        "export"
+    ],
 
     "ports-": {
         "21": "ftp-anon",
@@ -36,8 +58,5 @@
         "3389": "RDP",
         "5900": "VNC",
         "8080": "Tomcat"
-    },
-    "modules": [
-        "ftp"
-    ]
+    }
 }

@@ -11,10 +11,12 @@ def extractHostsNmap(mass):
 
 def extractHostsXML(mass):
     result = {}
-    for key, value in mass['nmaprun'].items():
-        if key != 'host':
-            continue
+    hosts = mass['nmaprun']['host']
 
+    if not isinstance(hosts, list):
+        hosts = [hosts]
+
+    for value in hosts:
         host = value['address']['addr']
         port = value['ports']['port']['portid']
 

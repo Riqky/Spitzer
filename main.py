@@ -6,6 +6,8 @@ import subprocess, shlex
 import time 
 import importlib
 import json
+import searchsploit
+import exit
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
@@ -30,9 +32,14 @@ class command(cmd.Cmd):
             print()
 
     def do_exploit(self, arg):
-        modules = config.getData('modules')
-        for module in modules:
-            eval(module + '.exploit(\''+ config.getDynamic('ip') +'\', ' + json.dumps(self.result) + ')')
+        modules = config.getData('ports')
+
+        for host in self.result:
+            searchsploit.find(host, self.result)
+            for port in self.result[host]['tcp']:
+                module = modules[str(port)][0]
+                if module != '':           
+                    eval(module + '.exploit(\''+ host +'\', ' + json.dumps(self.result[host]['tcp'][port]) + ',' + str(port) + ')' )
             
     def do_info(self, arg):
         if arg is '':
@@ -55,4 +62,8 @@ class command(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    command().cmdloop()
+    try:
+        command().cmdloop()
+    except KeyboardInterrupt:
+        print('exiting')
+        exit.quit()

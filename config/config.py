@@ -1,7 +1,5 @@
 import json
 
-#TODO? create .json file for ports, services and exploit (and alike)
-
 static = open('config/static.json', 'r').read()
 static = json.loads(static)
 
@@ -45,7 +43,8 @@ def getDynamic(key):
 
 def setStatic(key, value):
     static[key] = value
-    #write back into the file #TODO? only at shutdown?
+    
+def writeStatic():
     open('config/static.json', 'w').write(json.dumps(static))
 
 def setDynamic(key, value):

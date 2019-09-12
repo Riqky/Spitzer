@@ -1,1 +1,14 @@
-{"zapApiKey": "5da2coj05goiavhri54hf958gn", "interface": "eth0", "enableOutput": "True", "dirbPath": {"common": "/usr/share/dirb/wordlists/common.txt", "big": "/usr/share/dirb/wordlists/big.txt", "apache": "/usr/share/dirp/worlists/vulns/apache.txt", "test": "/root/test.txt"}}
+{
+    "zapApiKey": "2uc8tv6ibdah2doa5rkhoee5vk",
+    "interface": "eth0",
+    "enableOutput": "True",
+    "verbosity": "-v",
+    "dirbust": "True",
+    "testsslPath": "/root/testssl.sh",
+    "busterlist": {
+        "common": "/usr/share/dirb/wordlists/common.txt",
+        "big": "/usr/share/dirb/wordlists/big.txt",
+        "apache": "/usr/share/dirp/worlists/vulns/apache.txt",
+        "test": "/root/test.txt"
+    }
+}
