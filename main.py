@@ -59,8 +59,6 @@ class command(cmd.Cmd):
         except FileNotFoundError:
             print('command not found')
 
-
-
 if __name__ == '__main__':
     try:
         command().cmdloop()
