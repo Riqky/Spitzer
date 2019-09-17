@@ -14,9 +14,14 @@ def extractHostsNmap(mass):
 
 def extractHostsXML(mass):
     result = {}
-    for hosts in mass['nmaprun']['host']:
-        host = hosts['address']['addr']
-        port = hosts['ports']['port']['portid']
+    hosts = mass['nmaprun']['host']
+
+    if not isinstance(hosts, list):
+        hosts = [hosts]
+
+    for value in hosts:
+        host = value['address']['addr']
+        port = value['ports']['port']['portid']
 
         if host in result:
             result[host].append(port)

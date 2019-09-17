@@ -1,4 +1,7 @@
 {
     "ip":"192.168.192.133",
-    "nmapFlags": "-sV -sC"
+    "nmapFlags": "-sC",
+    "scanAll":"False",
+    "wordlist":"common"
+
 }
