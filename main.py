@@ -8,6 +8,7 @@ import importlib
 import json
 import searchsploit
 import exit
+from exploiters.web import burp
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
@@ -59,9 +60,17 @@ class command(cmd.Cmd):
         except FileNotFoundError:
             print('command not found')
 
+    def do_burp(self, arg):
+        burp.exploit('http://192.168.192.133')
+
 if __name__ == '__main__':
     try:
         command().cmdloop()
+
     except KeyboardInterrupt:
         print('exiting')
         exit.quit()
+    except:
+        #print('exiting')
+        exit.quit()
+        raise
