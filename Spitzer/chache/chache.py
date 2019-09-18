@@ -1,31 +1,33 @@
-#chache folder
+#Spitzer/chache folder
 #this is for temporary files used by the program
 #(will be cleared after the program is done)
 
 import os
 from shutil import copyfile
 
+path = __file__[:-9]
+
 def createFile(name, content=''):
-    file = open('chache/' + name, 'a+')
+    file = open(path + name, 'a+')
     file.write(content)
 
 def readFile(name):
     try:
-        return open('chache/' + name, 'r').read()
+        return open(print + name, 'r').read()
     except OSError:
         return ''
 
 def removeFile(name):
-    if not os.path.exists('chache/' + name):
-        os.remove('chache/' + name)
+    if not os.path.exists(path + name):
+        os.remove(path + name)
 
 def movetocurrent(name):
-    src = os.path.realpath('chache/' + name)
+    src = os.path.realpath(path + name)
     dst = os.getcwd() + '/' + name
     copyfile(src, dst)
     print('placed '+name+' in ' + dst)
 
-def clear(): #clears chache on exit
-    for file in os.listdir('chache'):
+def clear(): #clears Spitzer/chache on exit
+    for file in os.listdir(path):
         if not file.endswith('.py') and not file.startswith('__pycache__'):
-            os.remove('chache/' + file)
+            os.remove(path + file)

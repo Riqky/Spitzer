@@ -1,7 +1,7 @@
 import nmap
 import os
 
-from config import config
+from Spitzer.config import config
 #runs nmap, not much further to say...
 
 nm = nmap.PortScanner()

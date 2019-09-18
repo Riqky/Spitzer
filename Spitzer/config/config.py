@@ -1,14 +1,16 @@
 import json
 
 #handler for the three config files, every setting can the changed here
+path = __file__[:-9]
 
-static = open('config/static.json', 'r').read()
+
+static = open(path + 'static.json', 'r').read()
 static = json.loads(static)
 
-dynamic = open('config/dynamic.json', 'r').read()
+dynamic = open(path + 'dynamic.json', 'r').read()
 dynamic = json.loads(dynamic)
 
-data = open('config/data.json', 'r').read()
+data = open(path + 'data.json', 'r').read()
 data = json.loads(data)
 
 def getStatic(key):
@@ -47,7 +49,7 @@ def setStatic(key, value):
     static[key] = value
     
 def writeStatic():
-    open('config/static.json', 'w').write(json.dumps(static))
+    open(path + 'static.json', 'w').write(json.dumps(static))
 
 def setDynamic(key, value):
     dynamic[key] = value

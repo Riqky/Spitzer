@@ -1,4 +1,4 @@
-import command
+import Spitzer.command
 
 def find(host, nmap):
     for port, value in nmap[host]['tcp'].items():

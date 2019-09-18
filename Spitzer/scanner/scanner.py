@@ -2,10 +2,10 @@
 import xmltodict
 import json
 
-import host
-from config import config
-from chache import chache
-from scanner import nmapper, masscanner
+from Spitzer import host
+from Spitzer.config import config
+from Spitzer.chache import chache
+from Spitzer.scanner import nmapper, masscanner
 #scanner class to combine the nmap and the masscanner class
 
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....

@@ -1,10 +1,10 @@
-from config import config
-from result import export
-
 import sqlite3
 import os
 import os.path
 from sqlite3 import Error
+
+from Spitzer.config import config
+from Spitzer.result import export
 
 conn = None
 
