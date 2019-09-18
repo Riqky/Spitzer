@@ -4,7 +4,7 @@ import os
 import json
 import sys
 
-from Spitzer.Spitzer.core import searchsploit
+from Spitzer.core import searchsploit
 from Spitzer.core import exit
 from Spitzer.core.scanner import scanner
 from Spitzer.core.config import config
