@@ -4,10 +4,10 @@ import os
 import json
 import sys
 
-import Spitzer.lib.searchsploit
-import Spitzer.lib.exit
-from Spitzer.lib.scanner import scanner
-from Spitzer.lib.config import config
+from .lib import searchsploit
+from .lib import exit
+from .lib.scanner import scanner
+from .lib.config import config
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
