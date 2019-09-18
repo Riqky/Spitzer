@@ -1,5 +1,5 @@
-from Spitzer.core.config import config
-from Spitzer.core.result import export
+from core.config import config
+from core.result import export
 
 import sqlite3
 import os

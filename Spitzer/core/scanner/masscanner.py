@@ -1,8 +1,8 @@
 import subprocess
 import threading
 
-from Spitzer.core.config import config
-from Spitzer.core import command
+from core.config import config
+from core import command
 
 #runs masscanner twice and writes the output into a xml file in the chache folder
 #TODO run multiple time

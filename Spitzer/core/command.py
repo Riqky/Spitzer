@@ -1,6 +1,6 @@
 import subprocess
 
-from Spitzer.core.config import config
+from core.config import config
 
 #runs shell command
 def run(command, capture_output=False, check=True):
