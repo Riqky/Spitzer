@@ -9,8 +9,8 @@ setup(
     long_description=long_desc,
     author='Rick Theeuwes',
     packages=find_packages(),
-    entry_points={
-        'console_scripts': ['spitzer = main:main']},
+    entry_points=
+    {'console_scripts': ['spitzer = somethingmain:main']},
     install_requires=['xmltodict', 'python-nmap'],
     include_package_data=True
 )
