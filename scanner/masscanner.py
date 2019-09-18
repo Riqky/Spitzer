@@ -4,17 +4,23 @@ from config import config
 import command
 
 #runs masscanner twice and writes the output into a xml file in the chache folder
+#TODO run multiple time
 
-def scan(hosts, ports):
+def scan(hosts, ports, rate):
+    p = '-p'
+    if ports.startswith('-'):
+        ports = ports.split(' ')
+        p = ports[0]
+        ports = ports[1]
+    cmd = [
+        'masscan',
+        hosts,
+        '-oX','chache/sweep.xml',
+        p, ports,
+        '-e', config.getStatic('interface'),
+        '--wait=0',
+        config.getStatic('verbosity'),
+        '--rate=' + rate
+        ]
 
-    print('started masscan 1')
-    cmd = ['masscan', hosts,'-oX', 'chache/sweep1.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0', config.getStatic('verbosity')]
-    one = command.run(cmd)
-    print('finished masscan 1')
-
-    print('started masscan 2')
-    cmd = ['masscan', hosts,'-oX', 'chache/sweep2.xml', '-p ' + ports, '-e', config.getStatic('interface'), '--wait=0', config.getStatic('verbosity')]
-    two = command.run(cmd)
-    print('finished masscan 2')
-
-    return [one.stdout, two.stdout] #TODO? restart when one fails
+    command.run(cmd)

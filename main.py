@@ -1,13 +1,9 @@
 import cmd
-from exploiters import *
 from scanner import scanner
 from config import config
 import subprocess, shlex
-import time 
 import os
-import importlib
 import json
-import searchsploit
 import exit
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
@@ -20,7 +16,6 @@ class command(cmd.Cmd):
     def do_all(self, arg):
         '''runs both the scanner and the exploiter'''
         self.do_scan('')
-        self.do_exploit('')
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
@@ -35,16 +30,6 @@ class command(cmd.Cmd):
                     print('\t' + str(port) + '  ' + portVal['name'])
             print()
         print('output has been written to ' + os.getcwd() + '/scan.txt')
-
-    def do_exploit(self, arg):
-        modules = config.getData('ports')
-
-        for host in self.result:
-            searchsploit.find(host, self.result)
-            for port in self.result[host]['tcp']:
-                module = modules[str(port)][0]
-                if module != '':           
-                    eval(module + '.exploit(\''+ host +'\', ' + json.dumps(self.result[host]['tcp'][port]) + ',' + str(port) + ')' )
             
     def do_info(self, arg):
         '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''

@@ -45,8 +45,9 @@ def findScripts(ports):
     scripts = config.getData('ports')
 
     for port in ports:
-        if len(scripts[port]) > 1:
-            if scripts[port][1] != '':
-                result += scripts[port][1] + ','
+        if port in scripts:
+            if len(scripts[port]) > 1:
+                if scripts[port][1] != '':
+                    result += scripts[port][1] + ','
 
     return result[:-1]

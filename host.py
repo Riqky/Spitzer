@@ -13,6 +13,9 @@ def extractHostsNmap(mass):
     return result
 
 def extractHostsXML(mass):
+    if 'nmaprun' not in mass:
+        return mass
+
     result = {}
     hosts = mass['nmaprun']['host']
 
@@ -33,6 +36,7 @@ def extractHostsXML(mass):
 def merge(mass1, mass2):
     result1 = extractHostsXML(mass1)
     result2 = extractHostsXML(mass2)
+    print(result1)
     missed = {}
 
     #TODO? optimise, this code must be able to wirstand 16 millions ip's (maybe)
@@ -52,7 +56,7 @@ def merge(mass1, mass2):
 
     result = result2
     for host, ports in missed.items():
-        if host in missed:
+        if host in result:
             result[host] += ports
         else:
             result[host] = ports
