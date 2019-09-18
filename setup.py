@@ -11,5 +11,6 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': ['spitzer = main:main']},
-    install_requires=['xmltodict', 'python-nmap']
+    install_requires=['xmltodict', 'python-nmap'],
+    include_package_data=True
 )

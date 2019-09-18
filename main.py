@@ -88,3 +88,6 @@ def main():
     except:
         exit.quit()
         raise
+
+if __name__ == "__main__":
+    main()
