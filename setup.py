@@ -10,7 +10,7 @@ setup(
     author='Rick Theeuwes',
     packages=find_packages(),
     entry_points=
-    {'console_scripts': ['spitzer = spitzer.spitzer:main']},
+    {'console_scripts': ['spitzer = Spitzer.spitzer:main']},
     install_requires=['xmltodict', 'python-nmap'],
     include_package_data=True
 )

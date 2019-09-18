@@ -4,8 +4,8 @@ import os
 import json
 import sys
 
-from lib import searchsploit
-from lib import exit
+from core import searchsploit
+from core import exit
 from core.scanner import scanner
 from core.config import config
 

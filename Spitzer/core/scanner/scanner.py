@@ -2,7 +2,7 @@
 import xmltodict
 import json
 
-from lib import host
+from core import host
 from core.config import config
 from core.chache import chache
 from core.scanner import nmapper, masscanner

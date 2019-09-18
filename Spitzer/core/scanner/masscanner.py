@@ -2,7 +2,7 @@ import subprocess
 import threading
 
 from core.config import config
-from lib import command
+from core import command
 
 #runs masscanner twice and writes the output into a xml file in the chache folder
 #TODO run multiple time
