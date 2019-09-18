@@ -1,6 +1,6 @@
 import subprocess
 
-from core.config import config
+from config import config
 
 #runs shell command
 def run(command, capture_output=False, check=True):

@@ -2,10 +2,10 @@
 import xmltodict
 import json
 
-from core import host
-from core.config import config
-from core.chache import chache
-from core.scanner import nmapper, masscanner
+import host
+from config import config
+from chache import chache
+from scanner import nmapper, masscanner
 #scanner class to combine the nmap and the masscanner class
 
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....

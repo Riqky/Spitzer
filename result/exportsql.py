@@ -1,5 +1,5 @@
-from core.config import config
-from core.result import export
+from config import config
+from result import export
 
 import sqlite3
 import os

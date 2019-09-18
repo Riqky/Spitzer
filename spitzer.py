@@ -4,15 +4,41 @@ import os
 import json
 import sys
 
-from core import searchsploit
-from core import exit
-from core.scanner import scanner
-from core.config import config
+import searchsploit
+import exit
+from scanner import scanner
+from config import config
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
 class command(cmd.Cmd):
-    intro = '\nSpitzer\n' if first else '\n'
+    intro = '''
+    
+ _____       _ _                
+/  ___|     (_) |               
+\ `--. _ __  _| |_ _______ _ __ 
+ `--. \ '_ \| | __|_  / _ \ '__|
+/\__/ / |_) | | |_ / /  __/ |   
+\____/| .__/|_|\__/___\___|_|   
+      | |                       
+      |_|                       
+
+    
+          ooo
+         / : \\
+        / o0o \\
+  _____"~~~~~~~"_____
+  \+###|U * * U|###+/
+   \...!(.>..<)!.../
+    ^^^^o|   |o^^^^
+#+=====}:^^^^^:{=====+#
+ .____  .|!!!|.  ____.
+ |#####:/" " "\:#####|
+ |#####=|  O  |=#####|
+ |#####>\_____/<#####|
+  ^^^^^   | |   ^^^^^
+          o o
+'''
     prompt = '> '
     result = {}
 

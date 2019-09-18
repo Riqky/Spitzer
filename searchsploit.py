@@ -1,4 +1,4 @@
-from core import command
+import command
 
 def find(host, nmap):
     for port, value in nmap[host]['tcp'].items():
