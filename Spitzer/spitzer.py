@@ -6,8 +6,8 @@ import sys
 
 from lib import searchsploit
 from lib import exit
-from lib.scanner import scanner
-from lib.config import config
+from core.scanner import scanner
+from core.config import config
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
