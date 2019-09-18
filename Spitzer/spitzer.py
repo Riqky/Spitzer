@@ -1,12 +1,13 @@
 import cmd
-from scanner import scanner
-from config import config
 import subprocess, shlex
 import os
 import json
-import exit
 import sys
-import searchsploit
+
+import Spitzer.lib.searchsploit
+import Spitzer.lib.exit
+from Spitzer.lib.scanner import scanner
+from Spitzer.lib.config import config
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
