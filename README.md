@@ -1,11 +1,9 @@
 # Zero-Day-Wrapper
 
 ## Installing:
+Run the following command in the folder to install the Spitzer
 
-Unfortunately there is no installer yet
-Clone the project and install the requier dependencie(s):
-
-`pip3 install python-nmap`
+`pip3 install .`
 
 then just run the main.py with python 3
 
