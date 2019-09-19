@@ -4,7 +4,7 @@
 
 import os
 from shutil import copyfile
-from Spitzer.print import print
+
 
 path = __file__[:-9]
 

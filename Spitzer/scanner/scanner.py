@@ -5,17 +5,17 @@ from Spitzer import host
 from Spitzer.config import config
 from Spitzer.chache import chache
 from Spitzer.scanner import nmapper, masscanner
-from Spitzer.print import print
+from Spitzer.print import print_error
+
 #scanner class to combine the nmap and the masscanner class
 
-#TODO! scan only once on to much hosts or to big range, cause this method is shit....
 def scan():
     #get configurations
     massconf = config.get_static('masscan')
     times = int(massconf['times'])
     rate = massconf['rate']
-    hosts = config.getDynamic('ip')
-    scan = config.getDynamic('ports')
+    hosts = config.get_dynamic('ip')
+    scan = config.get_dynamic('ports')
 
     #scan options:
     #list: all from the exploit list
@@ -25,7 +25,7 @@ def scan():
     #or you can add your own ports
     ports = ''
     if scan == 'list':
-        port = config.getData('ports')
+        port = config.get_data('ports')
         for p in port:
             ports += str(p) + ','
         ports = ports[:-1] #remove last comma
@@ -43,9 +43,9 @@ def scan():
     result = {}
     for i in range(times):
         masscanner.scan(hosts, ports, rate)
-        xml = chache.readFile('sweep.xml')
+        xml = chache.read_file('sweep.xml')
         if xml == '':
-            print('[!] Scan '+str(i+1)+' failed!')
+            print_error('[!] Scan '+str(i+1)+' failed!')
             print('Are there any hosts up? Is the interface correct?')
             return
 

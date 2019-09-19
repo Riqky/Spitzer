@@ -8,7 +8,7 @@ from Spitzer import searchsploit
 from Spitzer import exit
 from Spitzer.scanner import scanner
 from Spitzer.config import config
-from Spitzer.print import print
+from Spitzer.print import print_error
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
@@ -61,7 +61,7 @@ class Command(cmd.Cmd):
             print(host + ':')
             for port, port_val in value['tcp'].items():
                 if port_val['state'] == 'open':
-                    print('\\t' + str(port) + '  ' + port_val['name'])
+                    print('\t' + str(port) + '  ' + port_val['name'])
             print()
         print('[-] Output has been written to ' + os.getcwd() + '/scan.txt')
             
@@ -89,7 +89,7 @@ class Command(cmd.Cmd):
             subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\\_(-_-)_/¯
             print()
         except FileNotFoundError:
-            print('[!] Command not found')
+            print_error('[!] Command not found')
 
     def do_exit(self, arg):
         '''exits the application'''
@@ -113,7 +113,7 @@ def main():
     try:
         c = Command()
         if not first:
-            c.intro = '\\n'
+            c.intro = '\n'
         c.cmdloop()
 
     except KeyboardInterrupt:

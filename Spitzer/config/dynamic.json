@@ -2,6 +2,10 @@
     "ip":"192.168.192.133",
     "nmapFlags": "-sC",
     "ports":"list",
-    "wordlist":"common"
+    "wordlist":"common",
+    "masscan": {
+        "times": "3",
+        "rate": "10000"
+    }
 
 }

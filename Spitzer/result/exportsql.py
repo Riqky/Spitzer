@@ -5,7 +5,7 @@ from sqlite3 import Error
 
 from Spitzer.config import config
 from Spitzer.result import export
-from Spitzer.print import print
+from Spitzer.print import print_error
 
 conn = None
 
@@ -21,39 +21,42 @@ def openconn():
 
     try:
         if not os.path.isfile(os.getcwd() + '/result.db'):
-            print('[!] DB file not found, creating: ' + os.getcwd() + '/result.db')
+            print_error('[!] DB file not found, creating: ' + os.getcwd() + '/result.db')
         conn = sqlite3.connect(os.getcwd() + '/result.db')
         print('[-] DB connection set')
 
     except Error as e:
-        print('[!] ERROR:' + e)
+        print_error('[!] ERROR:' + e)
+    except:
+        raise
 
 
 def createtables():
     queries = config.get_data('queries')
     for query in  queries.items():
-        executequery(query[1])
+        execute_query(query[1])
 
 
 def writeresult(result):
     for host, value in result.items():
         query = 'INSERT INTO host(ip) VALUES(\''+host+'\')'
-        hostid = executequery(query)
+        hostid = execute_query(query)
+        print('host' + str(hostid))
 
         if 'findings' in value:
             for find in value['findings']:
                 query = 'INSERT INTO finding(hostid, find) VALUES(?,?)'
-                executequery(query, [hostid, find])
+                print('id ' + str(execute_query(query, [hostid, find])))
 
         if 'webpages' in value:
             for page in value['webpages']:
                 query = 'INSERT INTO webpage(hostid, page) VALUES(?,?)'
-                executequery(query, [hostid, page])
+                print('id ' + str(execute_query(query, [hostid, page])))
 
 
-def executequery(query, parameters=None):
+def execute_query(query, parameters=None):
     if conn is None:
-        print('[!] Connection is not open!')
+        print_error('[!] Connection is not open!')
         return
     try:
         cur = conn.cursor()
@@ -65,4 +68,6 @@ def executequery(query, parameters=None):
         return cur.lastrowid
 
     except Error as e:
-        print('[!] ERROR:' + e)
+        print_error('[!] ERROR:' + e)
+    except:
+        raise

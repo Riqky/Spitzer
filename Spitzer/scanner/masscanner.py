@@ -3,11 +3,9 @@ import threading
 
 from Spitzer.config import config
 from Spitzer import command
-from Spitzer.print import print
+
 
 #runs masscanner twice and writes the output into a xml file in the chache folder
-#TODO run multiple time
-#TODO fix file
 chache = __file__[:-21] + 'chache/' 
 def scan(hosts, ports, rate):
     print()

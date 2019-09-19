@@ -1,4 +1,4 @@
-from Spitzer.print import print
+
 
 result = {}
 
