@@ -1,5 +1,5 @@
 from Spitzer import command
-from Spitzer.print import print
+
 
 def find(host, nmap):
     for value in nmap[host]['tcp'].items():

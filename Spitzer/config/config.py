@@ -1,7 +1,5 @@
 import json
 
-from Spitzer.print import print
-
 #handler for the three config files, every setting can the changed here
 path = __file__[:-9]
 
@@ -88,10 +86,20 @@ def printdict(diction):
 def set_value(args):
     key = args[0]
     value = args[1]
-
+    
     if key in dynamic:
         set_dynamic(key, value)
     elif key in static:
         set_static(key, value)
     else:
+        for val in dynamic.items():
+            if isinstance(val[1], dict) and key in val[1]:
+                dynamic[val[1]][key] = value
+                return
+
+        for val in static.items():
+            if isinstance(val[1], dict) and key in val[1]:
+                static[val[0]][key] = value
+                return
+
         print('key not found')

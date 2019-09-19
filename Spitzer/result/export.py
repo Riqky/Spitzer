@@ -3,9 +3,39 @@ import os
 import csv
 import json
 
-from Spitzer.print import print
 
-results = {}
+
+#results = {}
+
+results = {
+    '127.0.0.1':{
+        'findings':[
+            'this',
+            'that',
+            'something'
+        ],
+        'webpages':[
+            'index',
+            'main',
+            'html'
+        ]
+    },
+
+    '192.168.1.2':{
+        'findings':[
+            'asd',
+            'fgh',
+            'hjk'
+        ]
+    },
+    '10.10.10.10':{
+        'webpages':[
+            'zxc',
+            'bnm',
+            'cxvb'
+        ]
+    }
+}
 
 #test results
 def export():

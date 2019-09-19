@@ -1,4 +1,4 @@
-from Spitzer.print import print
+
 
 #to extract the xml files and merge them to one list of hosts
 
