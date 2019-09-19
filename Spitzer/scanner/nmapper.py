@@ -2,19 +2,20 @@ import nmap
 import os
 
 from Spitzer.config import config
+from Spitzer.print import print
 #runs nmap, not much further to say...
 
 nm = nmap.PortScanner()
 
 #TODO maybe change this for big networks
 def scan(hosts):
-    print('starting nmap')
+    print('[-] Starting nmap')
     result = {}
     for host, ports in hosts.items():
         script = findScripts(ports)
         arguments = config.getDynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan.txt -Pn -sV --script="' + script + '"' #TODO make print with selected verbosity
         result[host] = nm.scan(host, stringifyPorts(ports), arguments=arguments, sudo=True)['scan'][host] 
-    print('nmap done')
+    print('[-] Nmap done')
 
     return result
 
@@ -24,7 +25,7 @@ def scanSpecific(host, port, arguments):
 def parseXml(xml):
     result = nm.analyse_nmap_xml_scan(xml)
     if 'error' in result['nmap']['scaninfo']:
-        print(result['nmap']['scaninfo']['error'])
+        print('[!]' + result['nmap']['scaninfo']['error'])
         raise RuntimeError
     return result
 

@@ -1,4 +1,5 @@
-import Spitzer.command
+from Spitzer import command
+from Spitzer.print import print
 
 def find(host, nmap):
     for port, value in nmap[host]['tcp'].items():
@@ -28,4 +29,4 @@ def find(host, nmap):
         if count > 1:
             s = 's'
 
-        print('found ' + str(count) + ' exploit' + s + ' for ' + product + ' ' + version +' on ' + host)
+        print('[-] Found ' + str(count) + ' exploit' + s + ' for ' + product + ' ' + version +' on ' + host)

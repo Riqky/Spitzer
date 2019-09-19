@@ -8,6 +8,7 @@ from Spitzer import searchsploit
 from Spitzer import exit
 from Spitzer.scanner import scanner
 from Spitzer.config import config
+from Spitzer.print import print
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
@@ -52,6 +53,9 @@ class command(cmd.Cmd):
         result = scanner.scan()
         self.result = result
 
+        if result is None:
+            return
+
         #print result (mainly for testing)
         for host, value in result.items():
             print(host + ':')
@@ -59,7 +63,7 @@ class command(cmd.Cmd):
                 if portVal['state'] == 'open':
                     print('\t' + str(port) + '  ' + portVal['name'])
             print()
-        print('output has been written to ' + os.getcwd() + '/scan.txt')
+        print('[-] Output has been written to ' + os.getcwd() + '/scan.txt')
             
     def do_exploit(self, arg):
         '''exploits the found results'''
@@ -85,7 +89,7 @@ class command(cmd.Cmd):
             subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\_(-_-)_/¯
             print()
         except FileNotFoundError:
-            print('command not found')
+            print('[!] Command not found')
 
     def do_exit(self, arg):
         '''exits the application'''
@@ -99,6 +103,9 @@ class command(cmd.Cmd):
         '''exits the application'''
         exit.quit()
         sys.exit()
+
+    def emptyline(self):
+        pass
 
 
 def main():

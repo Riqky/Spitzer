@@ -1,3 +1,4 @@
+from Spitzer.print import print
 
 #to extract the xml files and merge them to one list of hosts
 
@@ -36,7 +37,6 @@ def extractHostsXML(mass):
 def merge(mass1, mass2):
     result1 = extractHostsXML(mass1)
     result2 = extractHostsXML(mass2)
-    print(result1)
     missed = {}
 
     #TODO? optimise, this code must be able to wirstand 16 millions ip's (maybe)

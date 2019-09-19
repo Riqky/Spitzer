@@ -5,6 +5,7 @@ from sqlite3 import Error
 
 from Spitzer.config import config
 from Spitzer.result import export
+from Spitzer.print import print
 
 conn = None
 
@@ -20,13 +21,12 @@ def openconn():
 
     try:
         if not os.path.isfile(os.getcwd() + '/result.db'):
-            print('db file not found, creating: ' + os.getcwd() + '/result.db')
+            print('[!] DB file not found, creating: ' + os.getcwd() + '/result.db')
         conn = sqlite3.connect(os.getcwd() + '/result.db')
-        print('db connection set')
+        print('[-] DB connection set')
 
     except Error as e:
-        print('ERROR:')
-        print(e)
+        print('[!] ERROR:' + e)
 
 
 def createtables():
@@ -53,9 +53,8 @@ def writeresult(result):
 
 def executequery(query, parameters=None):
     if conn is None:
-        print('open connnection first!')
+        print('[!] Connection is not open!')
         return
-    print(query + '  ' + str(parameters))
     try:
         cur = conn.cursor()
         if parameters is None:            
@@ -66,4 +65,4 @@ def executequery(query, parameters=None):
         return cur.lastrowid
 
     except Error as e:
-        print(e)
+        print('[!] ERROR:' + e)

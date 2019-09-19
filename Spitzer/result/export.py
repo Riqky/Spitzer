@@ -3,6 +3,8 @@ import os
 import csv
 import json
 
+from Spitzer.print import print
+
 #results = {}
 
 #test results
@@ -47,18 +49,14 @@ def exportcsv():
     pageswriter = csv.writer(filepages)
 
     for host, value in results.items():
-        print(host)
-        #print(value)
         if 'findings' in value:
-            print(value['findings'])
             findingWriter.writerow([host] + value['findings'])
         if 'webpages' in value:
-            print(value['webpages'])
             pageswriter.writerow([host] + value['webpages'])
 
-    print('created ' + os.getcwd() + '/findings.csv')
-    print('created ' + os.getcwd() + '/webpages.csv')
+    print('[-] Created ' + os.getcwd() + '/findings.csv')
+    print('[-] Created ' + os.getcwd() + '/webpages.csv')
 
 def exportjson():
     open(os.getcwd() + 'result.json', 'w+').write(json.dumps(results))
-    print('created ' + os.getcwd() + 'result.json')
+    print('[-] Created ' + os.getcwd() + '/result.json')

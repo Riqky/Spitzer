@@ -1,5 +1,7 @@
 import json
 
+from Spitzer.print import print
+
 #handler for the three config files, every setting can the changed here
 path = __file__[:-9]
 

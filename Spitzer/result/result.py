@@ -1,3 +1,5 @@
+from Spitzer.print import print
+
 result = {}
 
 def addPages(host, pages):

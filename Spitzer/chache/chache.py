@@ -4,6 +4,7 @@
 
 import os
 from shutil import copyfile
+from Spitzer.print import print
 
 path = __file__[:-9]
 
@@ -13,7 +14,7 @@ def createFile(name, content=''):
 
 def readFile(name):
     try:
-        return open(print + name, 'r').read()
+        return open(path + name, 'r').read()
     except OSError:
         return ''
 
@@ -25,7 +26,7 @@ def movetocurrent(name):
     src = os.path.realpath(path + name)
     dst = os.getcwd() + '/' + name
     copyfile(src, dst)
-    print('placed '+name+' in ' + dst)
+    print('[-] Placed '+name+' in ' + dst)
 
 def clear(): #clears Spitzer/chache on exit
     for file in os.listdir(path):

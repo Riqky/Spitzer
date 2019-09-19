@@ -1,4 +1,3 @@
-
 import xmltodict
 import json
 
@@ -6,6 +5,7 @@ from Spitzer import host
 from Spitzer.config import config
 from Spitzer.chache import chache
 from Spitzer.scanner import nmapper, masscanner
+from Spitzer.print import print
 #scanner class to combine the nmap and the masscanner class
 
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....
@@ -37,8 +37,6 @@ def scan():
         ports = '--top-ports 10000'
     else:
         ports = scan
-    
-    print('ports: ' + ports)
 
     #run masscan x times
     #get results from masscan and create one list of hosts with ports
@@ -47,8 +45,9 @@ def scan():
         masscanner.scan(hosts, ports, rate)
         xml = chache.readFile('sweep.xml')
         if xml == '':
-            print('scan '+i+' failed!')#TODO make retry?
-            continue
+            print('[!] Scan '+str(i+1)+' failed!')
+            print('Are there any hosts up? Is the interface correct?')
+            return
 
         mass = json.loads(json.dumps(xmltodict.parse(xml, attr_prefix='')))
         result = host.merge(mass, result)
