@@ -2,7 +2,7 @@ from Spitzer.print import print
 
 result = {}
 
-def addPages(host, pages):
+def add_pages(host, pages):
     global result
     check(host)
     result[host]['webpages'] += pages

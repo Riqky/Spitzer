@@ -2,7 +2,7 @@ from Spitzer.print import print
 
 #to extract the xml files and merge them to one list of hosts
 
-def extractHostsNmap(mass):
+def extract_hosts_nmap(mass):
     result = {}
     for host, value in mass['scan'].items():
         ports = []
@@ -13,7 +13,7 @@ def extractHostsNmap(mass):
 
     return result
 
-def extractHostsXML(mass):
+def extract_hosts_xml(mass):
     if 'nmaprun' not in mass:
         return mass
 
@@ -35,11 +35,10 @@ def extractHostsXML(mass):
     return result
 
 def merge(mass1, mass2):
-    result1 = extractHostsXML(mass1)
-    result2 = extractHostsXML(mass2)
+    result1 = extract_hosts_xml(mass1)
+    result2 = extract_hosts_xml(mass2)
     missed = {}
 
-    #TODO? optimise, this code must be able to wirstand 16 millions ip's (maybe)
     #merge the list of hosts and ports
 
     for host, ports in result1.items():
@@ -47,14 +46,22 @@ def merge(mass1, mass2):
             missed[host] = ports
         else:
             ports2 = result2[host]
-            for port in ports:
-                if port not in ports2:
-                    if host in missed:
-                        missed[host].append(port)
-                    else:
-                        missed[host] = [port]
+            merge_ports(missed, ports, ports2, host)
 
-    result = result2
+    return merge_missed(result2, missed)
+
+
+def merge_ports(missed, ports, ports2, host):
+    for port in ports:
+        if port not in ports2:
+            if host in missed:
+                missed[host].append(port)
+            else:
+                missed[host] = [port] 
+
+    return missed
+
+def merge_missed(result, missed):
     for host, ports in missed.items():
         if host in result:
             result[host] += ports

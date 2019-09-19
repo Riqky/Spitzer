@@ -12,15 +12,15 @@ from Spitzer.print import print
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
-class command(cmd.Cmd):
+class Command(cmd.Cmd):
     intro = '''
     
  _____       _ _                
 /  ___|     (_) |               
-\ `--. _ __  _| |_ _______ _ __ 
- `--. \ '_ \| | __|_  / _ \ '__|
-/\__/ / |_) | | |_ / /  __/ |   
-\____/| .__/|_|\__/___\___|_|   
+\\ `--. _ __  _| |_ _______ _ __ 
+ `--. \\ '_ \\| | __|_  / _ \\ '__|
+/\\__/ / |_) | | |_ / /  __/ |   
+\\____/| .__/|_|\\__/___\\___|_|   
       | |                       
       |_|                       
 
@@ -29,14 +29,14 @@ class command(cmd.Cmd):
          / : \\
         / o0o \\
   _____"~~~~~~~"_____
-  \+###|U * * U|###+/
-   \...!(.>..<)!.../
+  \\+###|U * * U|###+/
+   \\...!(.>..<)!.../
     ^^^^o|   |o^^^^
 #+=====}:^^^^^:{=====+#
  .____  .|!!!|.  ____.
- |#####:/" " "\:#####|
+ |#####:/" " "\\:#####|
  |#####=|  O  |=#####|
- |#####>\_____/<#####|
+ |#####>\\_____/<#####|
   ^^^^^   | |   ^^^^^
           o o
 '''
@@ -59,9 +59,9 @@ class command(cmd.Cmd):
         #print result (mainly for testing)
         for host, value in result.items():
             print(host + ':')
-            for port, portVal in value['tcp'].items():
-                if portVal['state'] == 'open':
-                    print('\t' + str(port) + '  ' + portVal['name'])
+            for port, port_val in value['tcp'].items():
+                if port_val['state'] == 'open':
+                    print('\\t' + str(port) + '  ' + port_val['name'])
             print()
         print('[-] Output has been written to ' + os.getcwd() + '/scan.txt')
             
@@ -73,20 +73,20 @@ class command(cmd.Cmd):
     def do_info(self, arg):
         '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''
         if arg is '':
-            config.printConfig()
+            config.print_config()
         else:
-            config.printConfig(arg)
+            config.print_config(arg)
 
     def do_set(self, arg):
         '''set the value by the given key'''
         args = arg.split(' ')
-        config.setValue(args)
+        config.set_value(args)
 
     def do_shell(self, arg):
         '''runs a shell command (!<command> can also be used)'''
         if arg == '': return
         try:
-            subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\_(-_-)_/¯
+            subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\\_(-_-)_/¯
             print()
         except FileNotFoundError:
             print('[!] Command not found')
@@ -111,9 +111,9 @@ class command(cmd.Cmd):
 def main():
     global first
     try:
-        c = command()
+        c = Command()
         if not first:
-            c.intro = '\n'
+            c.intro = '\\n'
         c.cmdloop()
 
     except KeyboardInterrupt:

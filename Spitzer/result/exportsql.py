@@ -30,9 +30,9 @@ def openconn():
 
 
 def createtables():
-    queries = config.getData('queries')
-    for key, query in  queries.items():
-        executequery(query)
+    queries = config.get_data('queries')
+    for query in  queries.items():
+        executequery(query[1])
 
 
 def writeresult(result):

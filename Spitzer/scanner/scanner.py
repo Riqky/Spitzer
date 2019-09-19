@@ -11,7 +11,7 @@ from Spitzer.print import print
 #TODO! scan only once on to much hosts or to big range, cause this method is shit....
 def scan():
     #get configurations
-    massconf = config.getStatic('masscan')
+    massconf = config.get_static('masscan')
     times = int(massconf['times'])
     rate = massconf['rate']
     hosts = config.getDynamic('ip')

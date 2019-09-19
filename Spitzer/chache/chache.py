@@ -8,21 +8,21 @@ from Spitzer.print import print
 
 path = __file__[:-9]
 
-def createFile(name, content=''):
+def create_file(name, content=''):
     file = open(path + name, 'a+')
     file.write(content)
 
-def readFile(name):
+def read_file(name):
     try:
         return open(path + name, 'r').read()
     except OSError:
         return ''
 
-def removeFile(name):
+def remove_file(name):
     if not os.path.exists(path + name):
         os.remove(path + name)
 
-def movetocurrent(name):
+def move_to_current(name):
     src = os.path.realpath(path + name)
     dst = os.getcwd() + '/' + name
     copyfile(src, dst)

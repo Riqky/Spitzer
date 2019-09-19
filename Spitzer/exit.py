@@ -4,4 +4,4 @@ from Spitzer.print import print
 
 def quit(): #runs on exit, for doing cleanup
     chache.clear()
-    config.writeStatic()
+    config.write_static()

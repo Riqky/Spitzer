@@ -21,9 +21,9 @@ def scan(hosts, ports, rate):
         hosts,
         '-oX',chache + 'sweep.xml',
         p, ports,
-        '-e', config.getStatic('interface'),
+        '-e', config.get_static('interface'),
         '--wait=0',
-        config.getStatic('verbosity'),
+        config.get_static('verbosity'),
         '--rate=' + rate
         ]
 

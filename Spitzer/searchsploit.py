@@ -2,9 +2,9 @@ from Spitzer import command
 from Spitzer.print import print
 
 def find(host, nmap):
-    for port, value in nmap[host]['tcp'].items():
-        product = value['product']
-        version = value['version']
+    for value in nmap[host]['tcp'].items():
+        product = value[1]['product']
+        version = value[1]['version']
 
         #check if one is empty
         if product == '':

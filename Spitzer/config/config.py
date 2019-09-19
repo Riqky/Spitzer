@@ -15,7 +15,7 @@ dynamic = json.loads(dynamic)
 data = open(path + 'data.json', 'r').read()
 data = json.loads(data)
 
-def getStatic(key):
+def get_static(key):
     try:
         value = static[key]
         if value == 'True':
@@ -28,13 +28,13 @@ def getStatic(key):
     except KeyError:
         return None
 
-def getData(key):
+def get_data(key):
     try: 
         return data[key]
     except KeyError:
         return None
 
-def getDynamic(key):
+def get_dynamic(key):
     try:
         value = dynamic[key]
         if value == 'True':
@@ -47,16 +47,16 @@ def getDynamic(key):
     except KeyError:
         return None
 
-def setStatic(key, value):
+def set_static(key, value):
     static[key] = value
     
-def writeStatic():
+def write_static():
     open(path + 'static.json', 'w').write(json.dumps(static))
 
-def setDynamic(key, value):
+def set_dynamic(key, value):
     dynamic[key] = value
 
-def printConfig(name='dynamic'):
+def print_config(name='dynamic'):
     if name == 'dynamic':
         printdict(dynamic)
     elif name == 'static':
@@ -85,13 +85,13 @@ def printdict(diction):
                 print("%-30s %-40s" % (str(key), str(value)))
     print()
 
-def setValue(args):
+def set_value(args):
     key = args[0]
     value = args[1]
 
     if key in dynamic:
-        setDynamic(key, value)
+        set_dynamic(key, value)
     elif key in static:
-        setStatic(key, value)
+        set_static(key, value)
     else:
         print('key not found')

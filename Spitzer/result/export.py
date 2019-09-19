@@ -1,56 +1,26 @@
-import result
+from Spitzer.result import result
 import os
 import csv
 import json
 
 from Spitzer.print import print
 
-#results = {}
+results = {}
 
 #test results
-results = {
-    '127.0.0.1':{
-        'findings':[
-            'this',
-            'that',
-            'something'
-        ],
-        'webpages':[
-            'index',
-            'main',
-            'html'
-        ]
-    },
-
-    '192.168.1.2':{
-        'findings':[
-            'asd',
-            'fgh',
-            'hjk'
-        ]
-    },
-    '10.10.10.10':{
-        'webpages':[
-            'zxc',
-            'bnm',
-            'cxvb'
-        ]
-    }
-}
-
 def export():
     global results
     results = result.get()
 
 def exportcsv():
-    filefindings = open(os.getcwd() + 'findings.csv', 'w+')
-    findingWriter = csv.writer(filefindings)
+    file_findings = open(os.getcwd() + 'findings.csv', 'w+')
+    finding_writer = csv.writer(file_findings)
     filepages = open(os.getcwd() + 'webpages.csv', 'w+')
     pageswriter = csv.writer(filepages)
 
     for host, value in results.items():
         if 'findings' in value:
-            findingWriter.writerow([host] + value['findings'])
+            finding_writer.writerow([host] + value['findings'])
         if 'webpages' in value:
             pageswriter.writerow([host] + value['webpages'])
 
