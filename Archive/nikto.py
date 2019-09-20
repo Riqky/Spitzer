@@ -1,5 +1,5 @@
-import command
-import result
+from Spitzer import command
+from Spitzer.result import result
 
 def exploit(url):
     print('nikto')

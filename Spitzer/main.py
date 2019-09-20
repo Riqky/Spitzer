@@ -9,9 +9,13 @@ from Spitzer import exit
 from Spitzer.scanner import scanner
 from Spitzer.config import config
 from Spitzer.print import print_error
+from Spitzer.exploiters import *
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
+
 first = True
+result = {} 
+
 class Command(cmd.Cmd):
     intro = '''
     
@@ -41,7 +45,6 @@ class Command(cmd.Cmd):
           o o
 '''
     prompt = '> '
-    result = {}
 
     def do_all(self, arg):
         '''runs both the scanner and the exploiter'''
@@ -50,8 +53,8 @@ class Command(cmd.Cmd):
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
+        global result
         result = scanner.scan()
-        self.result = result
 
         if result is None:
             return
@@ -67,8 +70,15 @@ class Command(cmd.Cmd):
             
     def do_exploit(self, arg):
         '''exploits the found results'''
-        for host in self.result:
-            searchsploit.find(host, self.result)
+
+        modules = config.get_data('ports')
+        global result
+        for host in result:
+            searchsploit.find(host, result)
+            for port in result[host]['tcp']:
+                module = modules[str(port)][0]
+                if module != '':           
+                    eval(module + '.exploit(\''+ host +'\', ' + json.dumps(result[host]['tcp'][port]) + ',' + str(port) + ')' )
 
     def do_info(self, arg):
         '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''

@@ -11,7 +11,7 @@ from Spitzer.print import print_error
 
 def scan():
     #get configurations
-    massconf = config.get_static('masscan')
+    massconf = config.get_dynamic('masscan')
     times = int(massconf['times'])
     rate = massconf['rate']
     hosts = config.get_dynamic('ip')

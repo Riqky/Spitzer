@@ -5,6 +5,7 @@
 import os
 from shutil import copyfile
 
+from Spitzer.print import print_error
 
 path = __file__[:-9]
 
@@ -15,7 +16,8 @@ def create_file(name, content=''):
 def read_file(name):
     try:
         return open(path + name, 'r').read()
-    except OSError:
+    except OSError as e:
+        print_error(e)
         return ''
 
 def remove_file(name):

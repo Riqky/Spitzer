@@ -1,4 +1,5 @@
 import json
+from Spitzer.print import print_error
 
 #handler for the three config files, every setting can the changed here
 path = __file__[:-9]
@@ -24,12 +25,14 @@ def get_static(key):
             return value
         
     except KeyError:
+        print_error('[!] key not found!')
         return None
 
 def get_data(key):
     try: 
         return data[key]
     except KeyError:
+        print_error('[!] key not found!')
         return None
 
 def get_dynamic(key):
@@ -43,6 +46,7 @@ def get_dynamic(key):
             return value
 
     except KeyError:
+        print_error('[!] key not found!')
         return None
 
 def set_static(key, value):
@@ -94,7 +98,7 @@ def set_value(args):
     else:
         for val in dynamic.items():
             if isinstance(val[1], dict) and key in val[1]:
-                dynamic[val[1]][key] = value
+                dynamic[val[0]][key] = value
                 return
 
         for val in static.items():

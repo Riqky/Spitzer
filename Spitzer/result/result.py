@@ -20,7 +20,7 @@ def check(host):
         result[host]['findings'] = []
         result[host]['webpages'] = []
 
-def printresult():
+def print_result():
     for line in result:
         print(line)
 

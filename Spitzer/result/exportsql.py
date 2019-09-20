@@ -12,11 +12,11 @@ conn = None
 #TODO fix!
 
 def test():
-    openconn()
-    createtables()
-    writeresult(export.results)
+    open_conn()
+    create_tables()
+    write_result(export.results)
 
-def openconn():
+def open_conn():
     global conn
 
     try:
@@ -31,13 +31,13 @@ def openconn():
         raise
 
 
-def createtables():
+def create_tables():
     queries = config.get_data('queries')
     for query in  queries.items():
         execute_query(query[1])
 
 
-def writeresult(result):
+def write_result(result):
     for host, value in result.items():
         query = 'INSERT INTO host(ip) VALUES(\''+host+'\')'
         hostid = execute_query(query)

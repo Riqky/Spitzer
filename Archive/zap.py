@@ -1,15 +1,15 @@
 from zapv2 import ZAPv2
-from config import config
 import threading
 import subprocess
 import shlex
 import time
 import os
 
+from Spitzer.config import config
+
 ###script for the zap API###
 
-#TODO not prefered.....
-
+#not prefered.....
 
 host = ''
 zap = None
@@ -38,17 +38,17 @@ def __run():
 def exploit(url):
     print('zap')
     init(url)
-    methods = config.getData('zap')
+    methods = config.get_data('zap')
     for method in methods:
         eval(method + '()') 
     #print('error with zap! was the api key correct?') #TODO handle error
 
-def init(thisHost):
+def init(this_host):
     global zap
     global host
-    host = thisHost
+    host = this_host
     __run()
-    zap = ZAPv2(apikey=config.getStatic('zapApiKey'))
+    zap = ZAPv2(apikey=config.get_static('zapApiKey'))
     zap.urlopen(host)
 
 def spider():
@@ -78,7 +78,7 @@ def scan():
 
 
 def export():
-    fHTML = open(os.getcwd() + '/zapreport.html', 'w+')
-    fHTML.write(zap.core.htmlreport())
-    fHTML.close() 
+    html = open(os.getcwd() + '/zapreport.html', 'w+')
+    html.write(zap.core.htmlreport())
+    html.close() 
     print('created file: ' + os.getcwd() + '/zapreport.html')
