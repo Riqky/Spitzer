@@ -45,7 +45,8 @@ def get_dynamic(key):
         else:
             return value
 
-    except KeyError:
+    except KeyError as e:
+        print(e)
         print_error('[!] key not found!')
         return None
 

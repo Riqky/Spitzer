@@ -68,4 +68,10 @@ def merge_missed(result, missed):
         else:
             result[host] = ports
 
+    return sort(result)
+
+def sort(result):
+    for value in result.items():
+        value[1].sort(key=int)
+
     return result

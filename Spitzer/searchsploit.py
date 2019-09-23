@@ -14,7 +14,7 @@ def find(host, nmap):
         result = result.stdout
 
         #found no sploits
-        if 'Exploits: No Result'in result and 'Shellcodes: No Result' in result:
+        if 'Exploits: No Result' in result and 'Shellcodes: No Result' in result:
             continue
 
         #count found sploits

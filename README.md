@@ -25,7 +25,6 @@ and then start the script to get the interactive shell:
 
 ```bash
 spitzer
->
 ```
 
 ## Usage
@@ -108,4 +107,4 @@ Example:
 
 ## Acknowledgements
 
-- HackDefense for giving me the room and help to create this script. 
+- HackDefense for giving me the room and help to create this script.
