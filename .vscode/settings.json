@@ -3,5 +3,14 @@
         "**/__pycache__": true,
         "**/.gitignore": true,
         "**/.vscode": true
-    }
+    },
+    "cSpell.words": [
+        "pentest",
+        "spitzer"
+    ],
+    "cSpell.ignoreWords": [
+        "masscan",
+        "nmap",
+        "unsanitized"
+    ]
 }
