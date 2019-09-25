@@ -4,11 +4,11 @@ import os
 import json
 import sys
 
-from Spitzer import searchsploit
-from Spitzer import exit
+from Spitzer import searchsploit, exit 
 from Spitzer.scanner import scanner
 from Spitzer.config import config
 from Spitzer.print import print_error
+from Spitzer.result.export import export
 from Spitzer.exploiters import *
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
@@ -96,7 +96,7 @@ class Command(cmd.Cmd):
         '''runs a shell command (!<command> can also be used)'''
         if arg == '': return
         try:
-            subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\\_(-_-)_/¯
+            subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\_(-_-)_/¯
             print()
         except FileNotFoundError:
             print_error('[!] Command not found')
@@ -116,6 +116,11 @@ class Command(cmd.Cmd):
 
     def emptyline(self):
         pass
+
+    def do_export(self, arg):
+        '''exports the findings 
+        options: cvs, json, faraday (<url> <username> <password> <workspace>)'''
+        export(arg)
 
 
 def main():

@@ -1,9 +1,10 @@
-from Spitzer.result import result
 import os
 import csv
 import json
 
-
+from Spitzer.result import result
+from Spitzer.print import print_error
+from Spitzer.command import run
 
 #results = {}
 
@@ -26,6 +27,7 @@ results = {
             'asd',
             'fgh',
             'hjk'
+            
         ]
     },
     '10.10.10.10':{
@@ -37,10 +39,17 @@ results = {
     }
 }
 
-#test results
-def export():
-    global results
-    results = result.get()
+def export(arg):
+    args = arg.split(' ')
+
+    if args[0] == 'csv':
+        exportcsv()
+    elif args[0] == 'json':
+        exportjson()
+    elif args[0] == 'faraday':
+        exportfaraday(arg)
+    else:
+        print_error('[!] No parameter given!')
 
 def exportcsv():
     file_findings = open(os.getcwd() + 'findings.csv', 'w+')
@@ -60,3 +69,31 @@ def exportcsv():
 def exportjson():
     open(os.getcwd() + 'result.json', 'w+').write(json.dumps(results))
     print('[-] Created ' + os.getcwd() + '/result.json')
+
+
+
+def exportfaraday(arg):
+    args = arg.split(' ')
+    url = args[1]
+    username = args[2]
+    password = args[3]
+    workspace = args[4]
+    
+    #TODO generate the csv
+
+    up = username + ':' + password + '@'
+
+    if not url.startswith('https://') and not url.startswith('http://'):
+        print_error('[!] Please add http or https')
+        return
+    if url.startswith('https://'):
+        url = url[:8] + up + url[8:]
+    else:
+        url = url[:7] + up + url[7:]
+
+    cmd = ['faraday-fplugin', 'import_csv', '-u', url, '--csv', 'path', '-w', workspace]
+
+    print(cmd)
+    #run(cmd)
+
+    #faraday-fplugin import_csv -u http://username:password@127.0.0.1:5985/ --csv /path/to/file/file.csv -w WORSKPACE_NAME
