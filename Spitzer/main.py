@@ -9,7 +9,7 @@ from Spitzer.scanner import scanner
 from Spitzer.config import config
 from Spitzer.print import print_error
 from Spitzer.result.export import export
-from Spitzer.exploiters import *
+from Spitzer.exploiters.exploit import exploit
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 
@@ -71,14 +71,10 @@ class Command(cmd.Cmd):
     def do_exploit(self, arg):
         '''exploits the found results'''
 
-        modules = config.get_data('ports')
         global result
         for host in result:
             searchsploit.find(host, result)
-            for port in result[host]['tcp']:
-                module = modules[str(port)][0]
-                if module != '':           
-                    eval(module + '.exploit(\''+ host +'\', ' + json.dumps(result[host]['tcp'][port]) + ',' + str(port) + ')' )
+        exploit(result)
 
     def do_info(self, arg):
         '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''
