@@ -94,7 +94,7 @@ def set_value(args):
     else:
         for val in dynamic.items():
             if isinstance(val[1], dict) and key in val[1]:
-                dynamic[val[1]][key] = value
+                dynamic[val[0]][key] = value
                 return
 
         for val in static.items():
