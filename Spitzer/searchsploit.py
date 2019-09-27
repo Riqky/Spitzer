@@ -20,9 +20,10 @@ def find(host, nmap):
         #count found sploits
         count = 0
         for line in result.splitlines():
-            if '--------' in line or 'Exploit Title' in line or 'No Result' in line:
+            if '--------' in line or 'Exploit Title' in line or 'No Result' in line or '(/usr/share/exploitdb/)' in line:
                 continue
             else:
+                print(line)
                 count += 1
 
         s = ''
