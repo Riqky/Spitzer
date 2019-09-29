@@ -14,7 +14,14 @@ def scan(hosts):
     for host, ports in hosts.items():
         script = find_scripts(ports)
         arguments = config.get_dynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan.txt -Pn -sV --script="' + script + '"' #TODO make print with selected verbosity
-        result[host] = nm.scan(host, stringify_ports(ports), arguments=arguments, sudo=True)['scan'][host]  
+        try:
+            result[host] = nm.scan(host, stringify_ports(ports), arguments=arguments, sudo=True)['scan'][host]  
+        except KeyError:
+            print_error('[!] Weird KeyError, skipping ' + host)
+            #write some data in log
+            file = open('/root/error.txt', 'w+')
+            file.write(str(file.read()) + '\n' + arguments + ' ' + host + ' ' + ports)
+            continue
     print('[-] Nmap done')
 
     return result
