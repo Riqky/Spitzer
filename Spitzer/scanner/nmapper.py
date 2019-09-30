@@ -13,7 +13,7 @@ def scan(hosts):
     result = {}
     for host, ports in hosts.items():
         script = find_scripts(ports)
-        arguments = config.get_dynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan.txt -Pn -sV --script="' + script + '"' #TODO make print with selected verbosity
+        arguments = config.get_dynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan_'+host+'.txt -Pn -sV --script="' + script + '"' #TODO make print with selected verbosity
         try:
             result[host] = nm.scan(host, stringify_ports(ports), arguments=arguments, sudo=True)['scan'][host]  
         except KeyError:
