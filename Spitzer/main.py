@@ -42,6 +42,7 @@ class Command(cmd.Cmd):
 '''
     prompt = '> '
     result = {}
+    config.set_ip(None)
 
     def do_all(self, arg):
         '''runs both the scanner and the exploiter'''
@@ -82,6 +83,12 @@ class Command(cmd.Cmd):
         args = arg.split(' ')
         config.set_value(args)
 
+    def completedefault(self, text, line, begidx, endidx):
+        if text == 'i':
+            return ['ip', 'interface']
+        if text == 'in':
+            return ['interface']
+
     def do_shell(self, arg):
         '''runs a shell command (!<command> can also be used)'''
         if arg == '': return
@@ -100,6 +107,10 @@ class Command(cmd.Cmd):
         exit.quit()
         sys.exit()
     def do_q(self, arg):
+        '''exits the application'''
+        exit.quit()
+        sys.exit()
+    def do_EOF(self, arg):
         '''exits the application'''
         exit.quit()
         sys.exit()

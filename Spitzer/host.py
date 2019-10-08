@@ -1,4 +1,4 @@
-
+from Spitzer import command
 
 #to extract the xml files and merge them to one list of hosts
 
@@ -69,3 +69,28 @@ def merge_missed(result, missed):
             result[host] = ports
 
     return result
+
+def get_interfaces():
+    interfaces = {}
+
+    interface = None
+    cmd = ['ifconfig']
+    result = command.run(cmd, True)
+    for line in result.splitlines(0):
+        if not line.startswith(' '):
+            interface = line.split(':')[0]
+            #interfaces[interface] = ''
+
+        if line == '':
+            interface = None
+
+        if 'inet ' in line and interface is not None:
+            parts = list(filter(None, line.split(' ')))
+            ip = parts[1]
+            netmask = parts[3]
+            range = sum(bin(int(x)).count('1') for x in netmask.split('.'))
+            ip = ip.split('.')
+            ip = ip[0] +'.'+ ip[1] +'.'+ ip[2] +'.'+ '0'
+            range = ip + '/' + str(range)
+            interfaces[interface] = range
+    return interfaces

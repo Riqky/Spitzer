@@ -3,12 +3,14 @@ import os
 
 from Spitzer.config import config
 from Spitzer.print import print_error
+from Spitzer.command import run
+from Spitzer.chache.chache import get_path
 #runs nmap, not much further to say...
 
 nm = nmap.PortScanner()
 
 #TODO maybe change this for big networks
-def scan(hosts):
+'''def scan(hosts):
     print('[-] Starting nmap')
     result = {}
     for host, ports in hosts.items():
@@ -24,10 +26,38 @@ def scan(hosts):
             continue
     print('[-] Nmap done')
 
-    return result
+    return result'''
 
-def scan_specific(host, port, arguments):
-    return nm.scan(host, stringify_ports(port), arguments, sudo=True)
+def scan(hosts):
+    print('[-] Starting nmap')
+    print(hosts)
+    for host, ports in hosts.items():
+        script = find_scripts(ports)
+        txt = ['-oN', get_path() + 'scan_' + host + '.txt']
+        xml = ['-oX', get_path() + 'scan_' + host + '.xml'] #TODO segmentation fault on large networks
+        arguments = ['nmap', config.get_dynamic('nmapFlags'), '-Pn', '-sV', config.get_static('verbosity'), '-p', stringify_ports(ports), host] + txt + xml #TODO change verbosity to 0123
+
+        if script != '':
+            arguments.append(script)
+        run(arguments)
+
+    return get_results()
+
+def get_results():
+    result = {}
+    text = ''
+    for file in os.listdir(get_path()):
+        if file.startswith('scan_') and file.endswith('.xml'):
+            xml_result = parse_xml(open(get_path() + file, 'r').read())
+            host = file.replace('scan_', '').replace('.xml', '')
+            result[host] = xml_result['scan'][host]
+
+        if file.startswith('scan_') and file.endswith('.txt'):
+            text +=  open(get_path() + file, 'r').read() + '\n\n'
+
+    open(os.getcwd() + '/scan.txt', 'w+').write(text)
+    return  result
+
 
 def parse_xml(xml):
     result = nm.analyse_nmap_xml_scan(xml)
@@ -59,7 +89,6 @@ def find_scripts(ports):
         if len(scripts[port]) > 1 and scripts[port][1] != '':
             result += scripts[port][1] + ','
     if result != '':
-        return '--script="' +result[:-1] + '"'
+        return '--script=' +result[:-1]
     else:
         return ''
- 

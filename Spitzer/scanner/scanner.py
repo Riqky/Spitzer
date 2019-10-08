@@ -8,6 +8,7 @@ from Spitzer.scanner import nmapper, masscanner
 from Spitzer.print import print_error
 
 #scanner class to combine the nmap and the masscanner class
+#TODO get ip range on startup
 
 def scan():
     #get configurations
@@ -46,14 +47,13 @@ def scan():
         xml = chache.read_file('sweep.xml')
         if xml == '':
             print_error('[!] Scan '+str(i+1)+' failed!')
-            print('Are there any hosts up? Is the interface correct?')
+            print_error('[!] Are there any hosts up? Is the interface correct?')
             return
 
         mass = json.loads(json.dumps(xmltodict.parse(xml, attr_prefix='')))
         result = host.merge(mass, result)
+        #TODO remove or empty file to make sure
         
-
-
     #run nmap once to confirm scan (masscan has some false positives)
     return nmapper.scan(result)
 

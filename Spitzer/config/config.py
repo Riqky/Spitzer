@@ -1,6 +1,10 @@
 import json
+from Spitzer.host import get_interfaces
+from Spitzer.print import print_error
 
 #handler for the three config files, every setting can the changed here
+#TODO make main get rather then static and dynamic (in part with the 'module' system)
+#TODO check if interface exsists
 path = __file__[:-9]
 
 
@@ -87,6 +91,9 @@ def set_value(args):
     key = args[0]
     value = args[1]
     
+    if key == 'interface':
+        set_ip(value)
+
     if key in dynamic:
         set_dynamic(key, value)
     elif key in static:
@@ -103,3 +110,18 @@ def set_value(args):
                 return
 
         print('key not found')
+
+def get_path():
+    return path
+
+def set_ip(interface):
+    interfaces = get_interfaces()
+    
+    if interface is None:
+        interface = get_static('interface')
+
+    if interface not in interfaces:
+        print_error('[!] Interface not found! make sure you use an exsisting interface')
+        return
+
+    set_value(['ip', interfaces[interface]])

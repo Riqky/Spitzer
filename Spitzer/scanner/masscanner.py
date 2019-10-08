@@ -26,4 +26,5 @@ def scan(hosts, ports, rate):
         ]
 
     command.run(cmd)
+    #TODO print found hosts
     

@@ -32,3 +32,6 @@ def clear(): #clears Spitzer/chache on exit
     for file in os.listdir(path):
         if not file.endswith('.py') and not file.startswith('__pycache__'):
             os.remove(path + file)
+
+def get_path():
+    return path
