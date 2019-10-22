@@ -1,6 +1,6 @@
 # Spitzer
 
-Spitzer is a *Day Zero Scanner* for a pentest. The idea of the scanner is to chart the network and find all open ports with possible outdated services. Spitzer does **not** exploit anything, it merely scans for possible exploits and errors. This tool was developed during an internship at [HackDefense](https://hackdefense.nl/) in 2019.
+Spitzer is a *Day Zero Scanner* for a pentest. The idea of the scanner is to chart the network and find all open ports with possible outdated services. Spitzer does **not** exploit anything, it merely scans for possible exploits and errors. This tool was developed during an internship at [HackDefense](https://hackdefense.com/) in 2019.
 
 ## Getting Started
 

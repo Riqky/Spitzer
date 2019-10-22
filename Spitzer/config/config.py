@@ -1,32 +1,16 @@
 import json
-from Spitzer.print import print_error
+
+from Spitzer.host import get_interfaces
+from Spitzer.print import print_error, print_warning
 
 #handler for the three config files, every setting can the changed here
 path = __file__[:-9]
 
-
-static = open(path + 'static.json', 'r').read()
-static = json.loads(static)
-
-dynamic = open(path + 'dynamic.json', 'r').read()
-dynamic = json.loads(dynamic)
+config = open(path + 'config.json', 'r').read()
+config = json.loads(config)
 
 data = open(path + 'data.json', 'r').read()
 data = json.loads(data)
-
-def get_static(key):
-    try:
-        value = static[key]
-        if value == 'True':
-            return True
-        elif value == 'False':
-            return False
-        else:
-            return value
-        
-    except KeyError:
-        print_error('[!] key not found!')
-        return None
 
 def get_data(key):
     try: 
@@ -35,9 +19,9 @@ def get_data(key):
         print_error('[!] key not found!')
         return None
 
-def get_dynamic(key):
+def get_config(key):
     try:
-        value = dynamic[key]
+        value = config[key][0]
         if value == 'True':
             return True
         elif value == 'False':
@@ -50,31 +34,11 @@ def get_dynamic(key):
         print_error('[!] key not found!')
         return None
 
-def set_static(key, value):
-    static[key] = value
-    
-def write_static():
-    open(path + 'static.json', 'w').write(json.dumps(static))
+def set_config(key, value):
+    config[key][0] = value
 
-def set_dynamic(key, value):
-    dynamic[key] = value
-
-def print_config(name='dynamic'):
-    if name == 'dynamic':
-        printdict(dynamic)
-    elif name == 'static':
-       printdict(static)
-    elif name == 'all':
-        print('dynamic')
-        print('====================================================================\n')
-        printdict(dynamic)
-        print('\n')
-        print('static')
-        print('====================================================================\n')
-        printdict(static)
-    else:
-        print('invalid type')
-        print('try: static, dynamic or all')
+def print_config():
+    printdict(config)
 
 def printdict(diction):
     for key, value in diction.items():
@@ -85,26 +49,47 @@ def printdict(diction):
             else:    
                 spaces = 20*' '
                 spaces = spaces[-len(str(value)):]
-                print("%-30s %-40s" % (str(key), str(value)))
+                print("%-20s %-20s %-30s" % (str(key), str(value[0]), str(value[1])))
     print()
 
 def set_value(args):
     key = args[0]
     value = args[1]
     
-    if key in dynamic:
-        set_dynamic(key, value)
-    elif key in static:
-        set_static(key, value)
+    if key == 'interface':
+        set_ip(value)
+
+    if key in config:
+        set_config(key, value)
     else:
-        for val in dynamic.items():
+        for val in config.items():
             if isinstance(val[1], dict) and key in val[1]:
-                dynamic[val[0]][key] = value
+                config[val[0]][key][0] = value
                 return
 
-        for val in static.items():
-            if isinstance(val[1], dict) and key in val[1]:
-                static[val[0]][key] = value
-                return
+        print_error('key not found')
 
-        print('key not found')
+def get_path():
+    #full path with / at the end
+    return path
+
+def complete_key(key_part):
+    result = []
+
+    for key in config:
+        if key.startswith(key_part):
+            result.append(key)
+
+    return result
+
+def set_ip(interface):
+    interfaces = get_interfaces()
+    
+    if interface is None:
+        interface = get_config('interface')
+
+    if interface not in interfaces:
+        print_warning('Interface not found! make sure you use an exsisting interface')
+        return
+
+    set_value(['ip', interfaces[interface]])

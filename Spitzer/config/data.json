@@ -28,5 +28,15 @@
         "host":"CREATE TABLE IF NOT EXISTS host ( id interger PRIMARY KEY, ip text)",
         "finding":"CREATE TABLE IF NOT EXISTS finding ( id integer PRIMARY KEY, hostid integer, find text, FOREIGN KEY (hostid) REFERENCES host(id))",
         "webpage":"CREATE TABLE IF NOT EXISTS webpage ( id integer PRIMARY KEY, hostid integer, page text, FOREIGN KEY (hostid) REFERENCES host(id))"
+    },
+
+    "dirbust": "True",
+    "testssl": "/opt/testssl.sh/testssl.sh",
+    "burp": "/opt/BurpSuitePro/burpsuite_pro.jar",
+    "busterlist": {
+        "common": "/usr/share/dirb/wordlists/common.txt",
+        "big": "/usr/share/dirb/wordlists/big.txt",
+        "apache": "/usr/share/dirp/worlists/vulns/apache.txt",
+        "test": "/root/test.txt"
     }
 }

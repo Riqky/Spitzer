@@ -21,12 +21,12 @@ def open_conn():
 
     try:
         if not os.path.isfile(os.getcwd() + '/result.db'):
-            print_error('[!] DB file not found, creating: ' + os.getcwd() + '/result.db')
+            print_error('DB file not found, creating: ' + os.getcwd() + '/result.db')
         conn = sqlite3.connect(os.getcwd() + '/result.db')
         print('[-] DB connection set')
 
     except Error as e:
-        print_error('[!] ERROR:' + e)
+        print_error('ERROR:' + e)
     except:
         raise
 
@@ -56,7 +56,7 @@ def write_result(result):
 
 def execute_query(query, parameters=None):
     if conn is None:
-        print_error('[!] Connection is not open!')
+        print_error('Connection is not open!')
         return
     try:
         cur = conn.cursor()
@@ -68,6 +68,6 @@ def execute_query(query, parameters=None):
         return cur.lastrowid
 
     except Error as e:
-        print_error('[!] ERROR:' + e)
+        print_error('ERROR:' + e)
     except:
         raise
