@@ -3,5 +3,6 @@
         "**/__pycache__": true,
         "**/.gitignore": true,
         "**/.vscode": true
-    }
+    },
+    "python.pythonPath": "C:\\Users\\rickt\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
 }

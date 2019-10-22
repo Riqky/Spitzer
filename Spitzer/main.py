@@ -8,7 +8,7 @@ from Spitzer import searchsploit
 from Spitzer import exit
 from Spitzer.scanner import scanner
 from Spitzer.config import config
-from Spitzer.print import print_error
+from Spitzer.print import print_error, print_warning
 
 #TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
 first = True
@@ -42,15 +42,19 @@ class Command(cmd.Cmd):
 '''
     prompt = '> '
     result = {}
+    current_module = None
+
     config.set_ip(None)
 
-    def do_all(self, arg):
+    def do_run(self, arg):
         '''runs both the scanner and the exploiter'''
         self.do_scan('')
         self.do_exploit('')
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
+        if int(config.get_config('threads')) > 1 and int(config.get_config('verbose')) != -1:
+            print_warning('You are running multiple threads with (high) verbosity, this will generate a lot of output!')
         result = scanner.scan()
         self.result = result
 
@@ -71,23 +75,17 @@ class Command(cmd.Cmd):
         for host in self.result:
             searchsploit.find(host, self.result)
 
-    def do_info(self, arg):
-        '''shows the config, you can specify the configs dynamic, static or all. dynamic is the standard'''
-        if arg is '':
-            config.print_config()
-        else:
-            config.print_config(arg)
+    def do_options(self, arg):
+        '''shows the config.'''
+        config.print_config()
 
     def do_set(self, arg):
         '''set the value by the given key'''
         args = arg.split(' ')
         config.set_value(args)
 
-    def completedefault(self, text, line, begidx, endidx):
-        if text == 'i':
-            return ['ip', 'interface']
-        if text == 'in':
-            return ['interface']
+    def complete_set(self, text, line, begidx, endidx):
+        return config.complete_key(text)
 
     def do_shell(self, arg):
         '''runs a shell command (!<command> can also be used)'''
@@ -96,7 +94,7 @@ class Command(cmd.Cmd):
             subprocess.run(shlex.split(arg), text=True) #does something weird with commands like 'cd'  ¯\\_(-_-)_/¯
             print()
         except FileNotFoundError:
-            print_error('[!] Command not found')
+            print_error('Command not found')
 
     def do_exit(self, arg):
         '''exits the application'''
@@ -106,18 +104,13 @@ class Command(cmd.Cmd):
         '''exits the application'''
         exit.quit()
         sys.exit()
-    def do_q(self, arg):
-        '''exits the application'''
-        exit.quit()
-        sys.exit()
     def do_EOF(self, arg):
-        '''exits the application'''
+        '''exits the application (for CTRL+D)'''
         exit.quit()
         sys.exit()
 
     def emptyline(self):
         pass
-
 
 def main():
     global first

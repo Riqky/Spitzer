@@ -19,12 +19,11 @@ def scan(hosts, ports, rate):
         hosts,
         '-oX',chache + 'sweep.xml',
         p, ports,
-        '-e', config.get_static('interface'),
+        '-e', config.get_config('interface'),
         '--wait=0',
-        config.get_static('verbosity'),
-        '--rate=' + rate
+        '--rate=' + rate,
         ]
 
-    command.run(cmd)
+    command.run(cmd, verbose=int(config.get_config('verbose')))
     #TODO print found hosts
     

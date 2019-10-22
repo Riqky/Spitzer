@@ -8,15 +8,13 @@ from Spitzer.scanner import nmapper, masscanner
 from Spitzer.print import print_error
 
 #scanner class to combine the nmap and the masscanner class
-#TODO get ip range on startup
 
 def scan():
     #get configurations
-    massconf = config.get_dynamic('masscan')
-    times = int(massconf['times'])
-    rate = massconf['rate']
-    hosts = config.get_dynamic('ip')
-    scan = config.get_dynamic('ports')
+    times = int(config.get_config('times'))
+    rate = config.get_config('rate')
+    hosts = config.get_config('ip')
+    scan = config.get_config('ports')
 
     #scan options:
     #list: all from the exploit list
@@ -43,16 +41,19 @@ def scan():
     #get results from masscan and create one list of hosts with ports
     result = {}
     for i in range(times):
+        print('[-] Starting Masscan ' + str(i+1))
         masscanner.scan(hosts, ports, rate)
         xml = chache.read_file('sweep.xml')
         if xml == '':
-            print_error('[!] Scan '+str(i+1)+' failed!')
-            print_error('[!] Are there any hosts up? Is the interface correct?')
+            print_error('Scan '+str(i+1)+' failed!')
+            print_error('Are there any hosts up? Is the interface correct?')
             return
+
+        print('[-] Masscan '+str(i+1)+' done')
 
         mass = json.loads(json.dumps(xmltodict.parse(xml, attr_prefix='')))
         result = host.merge(mass, result)
-        #TODO remove or empty file to make sure
+        chache.remove_file('sweep.xml')
         
     #run nmap once to confirm scan (masscan has some false positives)
     return nmapper.scan(result)

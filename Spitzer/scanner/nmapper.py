@@ -1,59 +1,64 @@
 import nmap
 import os
+import multiprocessing
+import datetime
+import re
+import time
 
 from Spitzer.config import config
 from Spitzer.print import print_error
-from Spitzer.command import run
+from Spitzer import command
 from Spitzer.chache.chache import get_path
+from Spitzer.interlace import run
+from Spitzer.host import get_hosts, get_ports
 #runs nmap, not much further to say...
 
 nm = nmap.PortScanner()
 
 #TODO maybe change this for big networks
-'''def scan(hosts):
-    print('[-] Starting nmap')
-    result = {}
-    for host, ports in hosts.items():
-        script = find_scripts(ports)
-        arguments = config.get_dynamic('nmapFlags') + ' -oN ' + os.getcwd() + '/scan_'+host+'.txt -Pn -sV ' + script #TODO make print with selected verbosity
-        try:
-            result[host] = nm.scan(host, stringify_ports(ports), arguments=arguments, sudo=True)['scan'][host]  
-        except KeyError:
-            print_error('[!] Weird KeyError, skipping ' + host)
-            #write some data in log
-            file = open('/root/error.txt', 'w+')
-            file.write(str(file.read()) + '\n' + arguments + ' ' + host + ' ' + ports)
-            continue
-    print('[-] Nmap done')
-
-    return result'''
 
 def scan(hosts):
-    print('[-] Starting nmap')
-    print(hosts)
-    for host, ports in hosts.items():
-        script = find_scripts(ports)
-        txt = ['-oN', get_path() + 'scan_' + host + '.txt']
-        xml = ['-oX', get_path() + 'scan_' + host + '.xml'] #TODO segmentation fault on large networks
-        arguments = ['nmap', config.get_dynamic('nmapFlags'), '-Pn', '-sV', config.get_static('verbosity'), '-p', stringify_ports(ports), host] + txt + xml #TODO change verbosity to 0123
+    print('[-] Starting nmap') 
 
-        if script != '':
-            arguments.append(script)
-        run(arguments)
+    dic = hosts 
+    hosts = get_hosts(dic)
+    ports = get_ports(dic)
+    script = find_scripts(ports)
+    flags = config.get_config('nmapFlags')
+    ports = stringify_ports(ports)
 
+    command = 'nmap ' + flags + ' -Pn -sV -p '+ports+' _host_ -oX  _output_/_host_.xml -oN _output_/_host_.txt'
+
+    if script != '':
+        command += script
+
+    run(command, hosts, ports)
+    print('[-] Nmap done')
     return get_results()
 
 def get_results():
     result = {}
     text = ''
-    for file in os.listdir(get_path()):
-        if file.startswith('scan_') and file.endswith('.xml'):
-            xml_result = parse_xml(open(get_path() + file, 'r').read())
-            host = file.replace('scan_', '').replace('.xml', '')
-            result[host] = xml_result['scan'][host]
+    while len(list(filter(re.compile('.xml$').search, os.listdir(get_path())))) != 0: #yeah for python!
+        print(len(list(filter(re.compile('.xml$').search, os.listdir(get_path())))))
+        for file in os.listdir(get_path()):
+            if file.endswith('.xml') and file != 'sweep.xml':
 
-        if file.startswith('scan_') and file.endswith('.txt'):
-            text +=  open(get_path() + file, 'r').read() + '\n\n'
+                xml = open(get_path() + file, 'r').read()
+                if 'finished time' not in xml:
+                    continue
+
+                xml_result = parse_xml(xml)
+                host = file.replace('.xml', '')
+                result[host] = xml_result['scan'][host]
+                os.remove(get_path() + file)
+
+        time.sleep(5)
+
+    for file in os.listdir(get_path()):
+        if file.endswith('.txt'):
+                print(get_path() + file)
+                text +=  open(get_path() + file, 'r').read() + '\n\n'
 
     open(os.getcwd() + '/scan.txt', 'w+').write(text)
     return  result

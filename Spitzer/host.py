@@ -94,3 +94,19 @@ def get_interfaces():
             range = ip + '/' + str(range)
             interfaces[interface] = range
     return interfaces
+
+def get_hosts(dic):
+    result = ''
+    for key in dic:
+        result += key + ','
+
+    return result[:-1]
+
+def get_ports(dic):
+    result = ''
+    for _, value in dic.items():
+        for port in value:
+            if port not in result.split(','):
+                result += port + ','
+
+    return result[:-1]
