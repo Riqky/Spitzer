@@ -4,7 +4,7 @@ long_desc = open('README.md', 'r').read()
 
 setup(
     name='Spitzer',
-    version='0.01',
+    version='0.1',
     description='A scanner for the first day of a pentest',
     long_description=long_desc,
     author='Rick Theeuwes',

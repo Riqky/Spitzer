@@ -6,7 +6,7 @@ from Spitzer.config import config
 
 #runs shell command
 def run(command, capture_output=False, check=True, verbose=None):
-    #print(command)
+    print(command)
     if verbose is not None:
         if verbose == -1:
             capture_output = True

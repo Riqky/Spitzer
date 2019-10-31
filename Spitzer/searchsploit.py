@@ -11,7 +11,6 @@ def find(host, nmap):
             continue
 
         result = command.run(['searchsploit', product, version], True)
-        result = result.stdout
 
         #found no sploits
         if 'Exploits: No Result' in result and 'Shellcodes: No Result' in result:

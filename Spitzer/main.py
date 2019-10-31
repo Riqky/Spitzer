@@ -55,8 +55,6 @@ class Command(cmd.Cmd):
 
     def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
-        if int(config.get_config('threads')) > 1 and int(config.get_config('verbose')) != -1:
-            print_warning('You are running multiple threads with (high) verbosity, this will generate a lot of output!')
         self.result = scanner.scan()
 
         if self.result is None:
@@ -74,8 +72,8 @@ class Command(cmd.Cmd):
     def do_exploit(self, arg):
         '''exploits the found results'''
 
-        for host in self.result:
-            searchsploit.find(host, self.result)
+        #for host in self.result:
+         #   searchsploit.find(host, self.result)
         exploit(self.result)
 
     def do_options(self, arg):

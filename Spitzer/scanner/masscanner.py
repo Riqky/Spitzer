@@ -9,19 +9,14 @@ from Spitzer import command
 chache = __file__[:-21] + 'chache/' 
 def scan(hosts, ports, rate):
     print()
-    p = '-p'
-    if ports.startswith('-'):
-        ports = ports.split(' ')
-        p = ports[0]
-        ports = ports[1]
     cmd = [
         'masscan',
         hosts,
         '-oX',chache + 'sweep.xml',
-        p, ports,
         '-e', config.get_config('interface'),
         '--wait=0',
         '--rate=' + rate,
+        ports
         ]
 
     command.run(cmd, verbose=int(config.get_config('verbose')))

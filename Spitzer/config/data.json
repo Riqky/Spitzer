@@ -4,25 +4,24 @@
         "22":[""],
         "23":[""],
         "25":[""],
-        "80":["http"],
+        "80":["websploit"],
         "111":["netdisk", "nfs-showmount"],
         "139":["netdisk"],
-    	"443":["http"],        
+    	"443":["websploit"],        
         "445":["netdisk"]
         
     },
 
     "web":[
-        "dirbuster",
-        "testssl",
-        "burp"
+        "spider",
+        "headers",
+        "testssl"
     ],
 
-    "zap":[
-        "spider",
-        "scan",
-        "export"
-    ],
+    "extensions":{
+        "apache":"html,php",
+        "iis":"asp"
+    },
 
     "queries":{
         "host":"CREATE TABLE IF NOT EXISTS host ( id interger PRIMARY KEY, ip text)",
@@ -31,8 +30,9 @@
     },
 
     "dirbust": "True",
-    "testssl": "/opt/testssl.sh/testssl.sh",
+    "testssl": "/opt/spitzer/testssl.sh",
     "burp": "/opt/BurpSuitePro/burpsuite_pro.jar",
+    "securityheaders":"/opt/spitzer/securityheaders.py",
     "busterlist": {
         "common": "/usr/share/dirb/wordlists/common.txt",
         "big": "/usr/share/dirb/wordlists/big.txt",
