@@ -12,13 +12,13 @@ pip install .
 #aquatone
 mkdir /tmp/spitzer
 
-wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip -P /tmp/spitzer
-unzip /tmp/spitzer/aquatone_linux_amd64_1.7.0.zip 
+wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip -P /tmp/spitzer/
+unzip /tmp/spitzer/aquatone_linux_amd64_1.7.0.zip -d /tmp/spitzer
 mv /tmp/spitzer/aquatone /usr/local/bin/
 
 #gobuster
-wget https://github.com/OJ/gobuster/releases/download/v3.0.1/gobuster-linux-amd64.7z -P /tmp/spitzer
-unzip /tmp/spitzer/gobuster-linux-amd64.7z 
+wget https://github.com/OJ/gobuster/releases/download/v3.0.1/gobuster-linux-amd64.7z -P /tmp/spitzer/
+7z x /tmp/spitzer/gobuster-linux-amd64.7z -o /tmp/spitzer/
 mv /tmp/spitzer/gobuster-linux-amd64/gobuster /usr/local/bin/
 
 #rm -r /tmp/spitzer
