@@ -18,7 +18,7 @@ mv /tmp/spitzer/aquatone /usr/local/bin/ > /dev/null
 
 #gobuster
 wget https://github.com/OJ/gobuster/releases/download/v3.0.1/gobuster-linux-amd64.7z -P /tmp/spitzer/
-7z e -y /tmp/spitzer/gobuster-linux-amd64.7z -o/tmp/spitzer/
+7z x /tmp/spitzer/gobuster-linux-amd64.7z -o/tmp/spitzer/
 mv /tmp/spitzer/gobuster-linux-amd64/gobuster /usr/local/bin/
 
 #rm -r /tmp/spitzer
