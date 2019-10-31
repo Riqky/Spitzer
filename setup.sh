@@ -20,8 +20,9 @@ mv /tmp/spitzer/aquatone /usr/local/bin/ > /dev/null
 wget https://github.com/OJ/gobuster/releases/download/v3.0.1/gobuster-linux-amd64.7z -P /tmp/spitzer/
 7z x /tmp/spitzer/gobuster-linux-amd64.7z -o/tmp/spitzer/
 mv /tmp/spitzer/gobuster-linux-amd64/gobuster /usr/local/bin/
+chmod +x /usr/local/bin/gobuster
 
-#rm -r /tmp/spitzer
+rm -r /tmp/spitzer
 
 #securityheaders.py
 wget https://raw.githubusercontent.com/juerkkil/securityheaders/master/securityheaders.py -P /opt/spitzer/ > /dev/null
