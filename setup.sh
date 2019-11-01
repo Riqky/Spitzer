@@ -39,7 +39,7 @@ wget https://raw.githubusercontent.com/drwetter/testssl.sh/3.0/testssl.sh -P /op
 mass=`masscan --version`
 massversion=${mass:16:6}
 massnum=`echo "$massversion" | tr -d .`
-if [$massnum -lt 106]
+if [ $massnum -lt 106 ]
 then
 #TODO clear current masscan
 #TODO ask?
