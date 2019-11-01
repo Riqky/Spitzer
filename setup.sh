@@ -7,7 +7,7 @@
 
 
 #TODO maybe first check for pip and python version
-'''npip install . 
+: 'npip install . 
 
 
 mkdir /tmp/spitzer
@@ -33,7 +33,7 @@ fi
 wget https://raw.githubusercontent.com/juerkkil/securityheaders/master/securityheaders.py -P /opt/spitzer/ 
 
 #testssl.sh
-wget https://raw.githubusercontent.com/drwetter/testssl.sh/3.0/testssl.sh -P /opt/spitzer/''' 
+wget https://raw.githubusercontent.com/drwetter/testssl.sh/3.0/testssl.sh -P /opt/spitzer/'
 
 #masscan
 mass=`masscan --version`
