@@ -41,11 +41,17 @@ massversion=${mass:16:6}
 massnum=`echo "$massversion" | tr -d .`
 if [ $massnum -lt 106 ]
 then
-#TODO clear current masscan
-#TODO ask?
-    git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
-    cd /tmp/spitzer/masscan; make -j 
-    mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/
+    read -p "Do you wish to install this program?" yn
+    case $yn in
+        [Nn]* ) rm -r /tmp/spitzer; exit;;
+        * )
+            #remove current version
+            loc = `which masscan`
+            rm $loc
+            git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
+            cd /tmp/spitzer/masscan; make -j
+            mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/;;
+    esac
 fi
 
-#rm -r /tmp/spitzer
+rm -r /tmp/spitzer
