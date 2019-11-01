@@ -43,7 +43,7 @@ if [ $massnum -lt 106 ]
 then
 #TODO clear current masscan
 #TODO ask?
-    git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer
+    git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
     make /tmp/spitzer/masscan
     mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/
 fi
