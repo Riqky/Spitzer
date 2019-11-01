@@ -44,7 +44,7 @@ then
 #TODO clear current masscan
 #TODO ask?
     git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
-    make /tmp/spitzer/masscan
+    cd /tmp/spitzer/masscan; make -j 
     mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/
 fi
 
