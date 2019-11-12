@@ -2,11 +2,11 @@ import subprocess
 import os
 
 from Spitzer.config import config
+from Spitzer.print import print_error
 
 
 #runs shell command
-def run(command, capture_output=False, check=True, verbose=None):
-    print(command)
+def run(cmd, capture_output=False, check=True, verbose=None):
     if verbose is not None:
         if verbose == -1:
             capture_output = True
@@ -14,10 +14,18 @@ def run(command, capture_output=False, check=True, verbose=None):
             v = '-'
             for _ in range(verbose):
                 v += 'v'
-            command.append(v)
+            cmd.append(v)
 
     #if capture_output is True, print doens't work, sadly...
-    return subprocess.run(command, capture_output=capture_output, check=check, text=True, bufsize=100000).stdout
+    print(cmd)
+    proc = None
+    try:
+        proc = subprocess.run(cmd, capture_output=capture_output, check=check, text=True, bufsize=100000)
+        return proc.stdout
+    except subprocess.SubprocessError:
+        print_error('Error in executing ' + cmd[0])
+        return None
+        #TODO errorlogging
 
 '''def run(command, capture_output=False, check=True):
     pipe = None

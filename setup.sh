@@ -7,7 +7,8 @@
 
 
 #TODO maybe first check for pip and python version
-: 'pip install . 
+#TODO lock package version!
+pip install . 
 
 
 mkdir /tmp/spitzer
@@ -33,7 +34,7 @@ fi
 wget https://raw.githubusercontent.com/juerkkil/securityheaders/master/securityheaders.py -P /opt/spitzer/ 
 
 #testssl.sh
-wget https://raw.githubusercontent.com/drwetter/testssl.sh/3.0/testssl.sh -P /opt/spitzer/'
+wget https://raw.githubusercontent.com/drwetter/testssl.sh/3.0/testssl.sh -P /opt/spitzer/
 
 #masscan
 mass=`masscan --version`
@@ -41,7 +42,7 @@ massversion=${mass:16:6}
 massnum=`echo "$massversion" | tr -d .`
 if [ $massnum -lt 106 ]
 then
-    read -p "Do you wish to install this program? y/n [y] " yn
+    read -p "Masscan appears to be outdated, do you want to reinstall it? y/n [y] " yn
     case $yn in
         [Nn]* ) rm -r /tmp/spitzer; exit;;
         * )

@@ -7,7 +7,7 @@ import sys
 from Spitzer import searchsploit, exit 
 from Spitzer.scanner import scanner
 from Spitzer.config import config
-from Spitzer.result.export import export
+from Spitzer.result.result import export, add
 from Spitzer.exploiters.exploit import exploit
 from Spitzer.print import print_error, print_warning
 
@@ -112,6 +112,9 @@ class Command(cmd.Cmd):
 
     def emptyline(self):
         pass
+    
+    def do_export(self, arg):
+        export()
 
 def main():
     global first

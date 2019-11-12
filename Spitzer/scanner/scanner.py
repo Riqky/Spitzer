@@ -24,7 +24,7 @@ def scan():
     #or you can add your own ports
     ports = ''
     if scan == 'list':
-        port = config.get_data('ports')
+        port = config.get_data('services')
         for p in port:
             ports += str(p) + ','
         ports = '-p' + ports[:-1] #remove last comma

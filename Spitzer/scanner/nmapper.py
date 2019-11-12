@@ -12,6 +12,7 @@ from Spitzer.chache.chache import get_path
 from Spitzer import interlace
 from Spitzer import command
 from Spitzer.host import get_hosts, get_ports
+from Spitzer.result.result import add
 #runs nmap, not much further to say...
 
 nm = nmap.PortScanner()
@@ -81,20 +82,20 @@ def run_nmap(ip, ports):
     script = find_scripts(ports)
     flags = config.get_config('nmapFlags')
 
-    command = ['nmap', flags, '-Pn', '-sV', ports, ip, '-oX', 
+    cmd = ['nmap', flags, '-Pn', '-sV', ports, ip, '-oX', 
     get_path() + 'scan_'+ip+'.xml','-oN',  get_path() + 'scan_'+ip+'.txt']
 
     if script != '':
-        command += script
-    command.run(command, verbose=int(config.get_config('verbose')))
+        cmd += script
+    command.run(cmd, verbose=int(config.get_config('verbose')))
     return get_results()
 
 def scan(hosts):
     print('[-] Starting nmap')
     for host, ports in hosts.items():
         script = find_scripts(ports)
-        txt = ['-oN', get_path() + 'scan_' + host + '.txt']
-        xml = ['-oX', get_path() + 'scan_' + host + '.xml'] #TODO segmentation fault on large networks?
+        txt = ['-oN', get_path() + 'scan_' + host + '.txt'] #TODO Fix working with hostnames
+        xml = ['-oX', get_path() + 'scan_' + host + '.xml']
         arguments = ['nmap', config.get_config('nmapFlags'), '-Pn', '-sV', '-p', stringify_ports(ports), host] + txt + xml
 
         if script != '':
@@ -114,6 +115,7 @@ def get_results():
 
         if file.startswith('scan_') and file.endswith('.txt'):
             text +=  open(get_path() + file, 'r').read() + '\n\n'
+            add(file.replace('scan_', '').replace('.txt', ''), 'nmap scan', open(get_path() + file, 'r').read())
 
     open(os.getcwd() + '/scan.txt', 'w+').write(text)
     return  result
@@ -140,7 +142,7 @@ def stringify_ports(ports):
 def find_scripts(ports):
 
     result = ''
-    scripts = config.get_data('ports')
+    scripts = config.get_data('services')
 
     for port in ports:
         if port not in scripts:

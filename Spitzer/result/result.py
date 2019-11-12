@@ -1,4 +1,4 @@
-
+from Spitzer.result.export import export_txt
 
 result = {}
 
@@ -8,10 +8,10 @@ def add_pages(host, pages):
     result[host]['webpages'] += pages
 
 
-def add(host, text):
+def add(host, title, text):
     global result
     check(host)
-    result[host]['findings'] += text
+    result[host]['findings'] += {title:text}
 
 def check(host):
     global result
@@ -20,9 +20,8 @@ def check(host):
         result[host]['findings'] = []
         result[host]['webpages'] = []
 
-def print_result():
-    for line in result:
-        print(line)
+def export():
+    export_txt(result)
 
 def get():
     return result
