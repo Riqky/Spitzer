@@ -8,17 +8,12 @@ Spitzer was developed on [Kali 2019.3](https://www.kali.org/downloads/) with [Py
 
 ## Installing
 
-Clone the project and enter the folder:
+Clone the project and install it:
 
 ```bash
 git clone https://github.com/Riqky/Spitzer
 cd Spitzer
-```
-
-Run the following command in the folder to install Spitzer with all the required modules.
-
-```bash
-pip3 install .
+./install.sh
 ```
 
 and then start the script to get the interactive shell:
@@ -36,10 +31,10 @@ From the interactive shell you can run a range of commands. Here is the output o
 
 Documented commands (type help <topic>):
 ========================================
-all  exit  exploit  help  info  q  quit  scan  set  shell
+EOF  exit  exploit  help  options  quit  run  scan  set  shell
 ```
 
-- **all**
+- **run**
 
 this runs both the exploit and the scan command.
 
@@ -55,13 +50,9 @@ Runs all the exploit modules in `data.json`. These modules do not actually explo
 
 displays the help for all commands. To get more information about the command, use `help <command>`. `?` can also be used
 
-- **info**
+- **options**
 
-Shows all the options for running the scans and exploits. This command has three options: `dynamic static all` and can be used with `info <option>`. `dynamic` and `static` are both a list of options, but `static` gets written back to the file after closing, dynamic not. `all` shows both `static` and `dynamic`. If no options is specified, `dynamic` is assumed.
-
-- **q**
-
-Same as `exit`
+Shows all the options for running the scans and exploits.
 
 - **quit**
 
@@ -77,7 +68,11 @@ Is used the set the options from `info`. Usage `set <key> <value>`
 
 - **shell**
 
-Can be used to run shell commands in the working directory with `shell <command>` or `!<command>`. **WARNING!** This runs the command completely unsanitized in the shell. Therefor this command could be used to gain [privilege escalation](https://en.wikipedia.org/wiki/Privilege_escalation) on a non-Kali system.
+Can be used to run shell commands in the working directory with `shell <command>` or `!<command>`. <!--**WARNING!** This runs the command completely unsanitized in the shell. Therefor this command could be used to gain [privilege escalation](https://en.wikipedia.org/wiki/Privilege_escalation) on a non-Kali system.-->
+
+- **EOF**
+
+Quits the pogram. This is executed when you press `CRTL+D`.
 
 ## Adding Module
 
@@ -95,14 +90,14 @@ Within the function you can run test the service for vulnerabilities. You can us
 Then, you'll need to add the script to `data.json`. This file contains all the ports and corresponding modules. In `data.json` add a new entry in `ports`:
 
 ```json
-"<port>":["<module-name>", "<nmap-script>"]
+"<service-name>":["<module-name>", "<nmap-script>"]
 ```
 
 Example:
 
 ```json
-"80":["http"]
-"21":["ftp", "ftp-anon"]
+"http":["websploit"]
+"ftp":["ftp", "ftp-anon"]
 ```
 
 ## Acknowledgements
