@@ -41,6 +41,7 @@ def export_txt(results):
     for host, value in results.items():
         if 'findings'  in value:
             for ob in results[host]['findings']:
+                print(ob)
                 txt += '\n\n' + ob['title'] + '\n' + ob['text']
 
         if 'webpages' in value:

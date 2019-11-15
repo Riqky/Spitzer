@@ -79,24 +79,19 @@ def get_interfaces():
     interfaces = {}
 
     interface = None
-    cmd = ['ifconfig']
+    cmd = ['ip', 'addr']
     result = command.run(cmd, True)
-    for line in result.splitlines(0):
+    for line in result.splitlines():
         if not line.startswith(' '):
-            interface = line.split(':')[0]
+            interface = line.split(':')[1].replace(' ','')
 
         if line == '':
             interface = None
 
         if 'inet ' in line and interface is not None:
-            parts = list(filter(None, line.split(' ')))
+            parts = line.split(' ')
             ip = parts[1]
-            netmask = parts[3]
-            range = sum(bin(int(x)).count('1') for x in netmask.split('.'))
-            ip = ip.split('.')
-            ip = ip[0] +'.'+ ip[1] +'.'+ ip[2] +'.'+ '0'
-            range = ip + '/' + str(range)
-            interfaces[interface] = range
+            interfaces[interface] = ip
     return interfaces
 
 def get_hosts(dic):

@@ -59,9 +59,13 @@ def scan():
         #run nmap once to confirm scan (masscan has some false positives)
 
         print('[*] All masscans are done, found: ')
-
+        #ugly lil sort method
+        r = []
         for h in result:
-            print(h)
+            r.append(h)
+        r.sort()
+        for h in r:
+            print(r)
 
         return nmapper.scan(result)
     else:

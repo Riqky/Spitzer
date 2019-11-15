@@ -30,7 +30,7 @@
     },
 
     "dirbust": "True",
-    "testssl": "/opt/spitzer/testssl.sh",
+    "testssl": "/opt/spitzer/testssl/testssl.sh",
     "burp": "/opt/BurpSuitePro/burpsuite_pro.jar",
     "securityheaders":"/opt/spitzer/securityheaders.py",
     "busterlist": {

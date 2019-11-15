@@ -20,5 +20,4 @@ def scan(hosts, ports, rate):
         ]
 
     command.run(cmd, verbose=int(config.get_config('verbose')))
-    #TODO print found hosts
     

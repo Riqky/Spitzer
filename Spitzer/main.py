@@ -11,8 +11,6 @@ from Spitzer.result.result import export, add
 from Spitzer.exploiters.exploit import exploit
 from Spitzer.print import print_error, print_warning
 
-#TODO make a 'big' or 'light' switch, cause this program is already a dos'ser
-
 first = True
 
 class Command(cmd.Cmd):
