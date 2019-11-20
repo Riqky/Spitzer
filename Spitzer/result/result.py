@@ -1,6 +1,7 @@
-from Spitzer.result.export import export_txt
+
 
 result = {}
+hosts = {}
 
 def add_pages(host, pages):
     global result
@@ -20,8 +21,7 @@ def check(host):
         result[host]['findings'] = []
         result[host]['webpages'] = []
 
-def export():
-    export_txt(result)
 
-def get():
-    return result
+def save_hosts(nmap):
+    print(nmap)
+    print('isnmap')

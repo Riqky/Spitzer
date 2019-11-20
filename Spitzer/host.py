@@ -89,7 +89,7 @@ def get_interfaces():
             interface = None
 
         if 'inet ' in line and interface is not None:
-            parts = line.split(' ')
+            parts = list(filter(None, line.split(' ')))
             ip = parts[1]
             interfaces[interface] = ip
     return interfaces

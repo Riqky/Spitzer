@@ -48,13 +48,19 @@ def scan(hosts):
 def get_results():
     result = {}
     text = ''
+
+    os.mkdir(os.getcwd() + '/xml')
+
     for file in os.listdir(get_path()):
         if file.startswith('scan_') and file.endswith('.xml'):
             xml_result = parse_xml(open(get_path() + file, 'r').read())
             host = file.replace('scan_', '').replace('.xml', '')
             result[host] = xml_result['scan'][host]
+            f = open(file, 'a')
+            f.write(open(get_path() + file, 'r').read())
+            f.close()
 
-        if file.startswith('scan_') and file.endswith('.txt'):
+        if file.startswith('scan_') and file.endswith('.txt'): #TODO fix
             text +=  open(get_path() + file, 'r').read() + '\n\n'
             add(file.replace('scan_', '').replace('.txt', ''), 'nmap scan', open(get_path() + file, 'r').read())
 

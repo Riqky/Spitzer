@@ -7,7 +7,7 @@ import sys
 from Spitzer import searchsploit, exit 
 from Spitzer.scanner import scanner
 from Spitzer.config import config
-from Spitzer.result.result import export, add
+from Spitzer.result import result
 from Spitzer.exploiters.exploit import exploit
 from Spitzer.print import print_error, print_warning
 
@@ -42,7 +42,7 @@ class Command(cmd.Cmd):
           o o
 '''
     prompt = '> '
-    result = {}
+    result = {} #TODO fix when scan and exploit are run
 
     config.set_ip(None)
 
@@ -58,6 +58,7 @@ class Command(cmd.Cmd):
         if self.result is None:
             return
 
+        result.save_hosts(self.result)
         #print result (mainly for testing)
         for host, value in self.result.items():
             print(host + ':')

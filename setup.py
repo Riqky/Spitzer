@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     entry_points=
     {'console_scripts': ['spitzer = Spitzer.main:main']},
-    install_requires=['xmltodict', 'python-nmap'],
+    install_requires=['xmltodict', 'python-nmap', 'python-docx'],
     include_package_data=True,
     package_data={'': ['*.json']}
 )  
