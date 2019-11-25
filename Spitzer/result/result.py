@@ -1,4 +1,4 @@
-
+from Spitzer.result import export_report, export_table
 
 result = {}
 hosts = {}
@@ -23,5 +23,11 @@ def check(host):
 
 
 def save_hosts(nmap):
-    print(nmap)
-    print('isnmap')
+    global hosts
+
+    for ip, value in nmap.items():
+        hosts[ip] = {}
+        for port, val in value['tcp'].items():
+            hosts[ip][port] = [val['name'], val['product'], val['version']]
+
+    export_table.export(hosts)

@@ -93,3 +93,4 @@ def set_ip(interface):
         return
 
     set_value(['ip', interfaces[interface]])
+    print_warning('Changed IP to ' + interfaces[interface])

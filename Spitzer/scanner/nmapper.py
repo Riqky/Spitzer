@@ -48,15 +48,18 @@ def scan(hosts):
 def get_results():
     result = {}
     text = ''
-
-    os.mkdir(os.getcwd() + '/xml')
+    
+    try:
+        os.mkdir('xml')
+    except FileExistsError:
+        pass
 
     for file in os.listdir(get_path()):
         if file.startswith('scan_') and file.endswith('.xml'):
             xml_result = parse_xml(open(get_path() + file, 'r').read())
             host = file.replace('scan_', '').replace('.xml', '')
             result[host] = xml_result['scan'][host]
-            f = open(file, 'a')
+            f = open('xml/' + file, 'a+')
             f.write(open(get_path() + file, 'r').read())
             f.close()
 
