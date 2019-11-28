@@ -10,23 +10,20 @@
 pip3 install . 
 
 #if /tmp/spitzer exsists, stop the script
-if [-d /tmp/spitzer ]
-then
-    exit
+if [ -d "/opt/spitzer/" ]; then
+    exit 0
 fi
 mkdir /tmp/spitzer
 
-#aquatone
-if [-z which aquatone]
-then
+#aquatone"
+if [ -z `which aquatone` ]; then
     wget https://github.com/michenriksen/aquatone/releases/download/v1.7.0/aquatone_linux_amd64_1.7.0.zip -P /tmp/spitzer/ 
     unzip /tmp/spitzer/aquatone_linux_amd64_1.7.0.zip -d /tmp/spitzer 
     mv /tmp/spitzer/aquatone /usr/local/bin/ 
 fi
 
 #gobuster
-if [-z which gobuster]
-then
+if [ -z `which gobuster` ]; then
     wget https://github.com/OJ/gobuster/releases/download/v3.0.1/gobuster-linux-amd64.7z -P /tmp/spitzer/
     7z x /tmp/spitzer/gobuster-linux-amd64.7z -o/tmp/spitzer/
     mv /tmp/spitzer/gobuster-linux-amd64/gobuster /usr/local/bin/
@@ -45,8 +42,7 @@ chmod +x /opt/spitzer/*
 mass=`masscan --version`
 massversion=${mass:16:6}
 massnum=`echo "$massversion" | tr -d .`
-if [ $massnum -lt 106 ]
-then
+if [ $massnum -lt 106 ]; then
     read -p "Masscan appears to be outdated, do you want to reinstall it? y/n [y] " yn
     case $yn in
         [Nn]* ) rm -r /tmp/spitzer; exit;;

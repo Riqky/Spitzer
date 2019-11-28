@@ -42,9 +42,11 @@ class Command(cmd.Cmd):
           o o
 '''
     prompt = '> '
-    result = {} #TODO fix when scan and exploit are run
+    result = {} #TODO fix? when scan and exploit are run
 
-    config.set_ip(None)
+    def __init__(self):
+        cmd.Cmd.__init__(self)
+        config.set_ip(None)
 
     def do_run(self, arg):
         '''runs both the scanner and the exploiter'''
@@ -113,7 +115,7 @@ class Command(cmd.Cmd):
         pass
     
     def do_export(self, arg):
-        export()
+        pass#export()
 
 def main():
     global first
