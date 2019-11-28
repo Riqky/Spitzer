@@ -9,7 +9,11 @@
 #TODO maybe first check for pip and python version
 pip3 install . 
 
-
+#if /tmp/spitzer exsists, stop the script
+if [-d /tmp/spitzer ]
+then
+    exit
+fi
 mkdir /tmp/spitzer
 
 #aquatone
