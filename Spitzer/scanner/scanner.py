@@ -46,9 +46,8 @@ def scan():
             masscanner.scan(hosts, ports, rate)
             xml = chache.read_file('sweep.xml')
             if xml == '':
-                print_error('Scan '+str(i+1)+' failed!')
-                print_error('Are there any hosts up? Is the interface correct?')#TODO run nmap when masscan fails
-                return
+                print_error('Scan '+str(i+1)+' failed! running nmap')
+                return nmapper.run_nmap(hosts, ports)
 
             print('[-] Masscan '+str(i+1)+' done')
 

@@ -63,7 +63,7 @@ def get_results():
             f.write(open(get_path() + file, 'r').read())
             f.close()
 
-        if file.startswith('scan_') and file.endswith('.txt'): #TODO fix
+        if file.startswith('scan_') and file.endswith('.txt'):
             text +=  open(get_path() + file, 'r').read() + '\n\n'
             add(file.replace('scan_', '').replace('.txt', ''), 'nmap scan', open(get_path() + file, 'r').read())
 
