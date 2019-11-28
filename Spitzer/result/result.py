@@ -24,7 +24,7 @@ def add_pages(base_url, pages):
     pass
 
 def export_vulns():
-    f = open(os.getcwd() + '.spitzer_result.json', 'w+')
+    f = open(os.path.expanduser("~") + '.spitzer_result.json', 'w+')
     f.write(json.dumps(result))
     f.close()
 
