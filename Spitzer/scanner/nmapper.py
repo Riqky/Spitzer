@@ -24,7 +24,7 @@ def run_nmap(ip, ports):
     flags = config.get_config('nmapFlags')
 
     cmd = ['nmap', flags, '-Pn', '-sV', ports, ip, '-oX', 
-    get_path() + 'scan_'+ip+'.xml','-oN',  get_path() + 'scan_'+ip+'.txt']
+    get_path() + 'scan_'+ip.split('/')[0]+'.xml','-oN',  get_path() + 'scan_'+ip.split('/')[0]+'.txt']
 
     if script != '':
         cmd += script

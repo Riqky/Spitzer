@@ -1,33 +1,40 @@
 from Spitzer.result import export_report, export_table
 
+import os
+import json
+
 result = {}
 hosts = {}
 
-def add_pages(host, pages):
+def add_vuln(host, vuln):
     global result
-    check(host)
-    result[host]['webpages'] += pages
 
+    if host in result:
+        result[host].append(vuln)
+    else:
+        result[host] = [vuln]
 
-def add(host, title, text):
-    global result
-    check(host)
-    result[host]['findings'] += {title:text}
+    print(result)
+    print('\n')
 
-def check(host):
-    global result
-    if host not in result:
-        result[host] = {}
-        result[host]['findings'] = []
-        result[host]['webpages'] = []
+def add(host, title, body):
+    pass
 
+def add_pages(base_url, pages):
+    pass
+
+def export_vulns():
+    f = open(os.getcwd() + '.spitzer_result.json', 'w+')
+    f.write(json.dumps(result))
+    f.close()
 
 def save_hosts(nmap):
     global hosts
 
     for ip, value in nmap.items():
-        hosts[ip] = {}
+        if ip not in hosts:
+            hosts[ip] = {}
         for port, val in value['tcp'].items():
             hosts[ip][port] = [val['name'], val['product'], val['version']]
 
-    export_table.export(hosts)
+    export_report.export(hosts)

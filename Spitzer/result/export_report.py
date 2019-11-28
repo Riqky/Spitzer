@@ -6,7 +6,7 @@ from Spitzer.print import print_error
 from Spitzer.config.config import get_path
 
 def export(hosts):
-
+    #TODO  sort for big range
 
     #sort ips
     ips = list(hosts.keys())
@@ -18,22 +18,22 @@ def export(hosts):
     #create standard first page
     document.add_picture(get_path() + 'logo.png')
 
-    paragraph(document, 'VULNERABILITY SCAN REPORT', 'Monstserrat', 11, True)
-    paragraph(document, 'This is our report of the vulnerability scan conducted on your external IP addresses on '+date.today()+'.\
+    paragraph(document, 'VULNERABILITY SCAN REPORT', 'Montserrat', 11, True)
+    paragraph(document, 'This is our report of the vulnerability scan conducted on your external IP addresses on '+str(date.today())+'.\
         \nWe’ve scanned the following addresses:', 'Noto Sans', 10)
     p = document.add_paragraph('', style='List Bullet')
-    p.add_run().font.name = 'Fira Mono'
+    p.add_run().font.name = 'Noto Sans'
     p.add_run().font.size = Pt(9)
 
-    paragraph(document, 'Scans originated from:', 'Noto Sans', 10)
+    paragraph(document, '\nScans originated from:', 'Noto Sans', 10)
 
     table = document.add_table(rows=1, cols=3)
     table.style = 'TableGrid'
     table.autofit = True
 
-    paragraph(document, 'Our findings were as follows:', 'Noto Sans', 10)
+    paragraph(document, 'Our findings were as follows:', 'Noto Sans', 10)#TODO set font
     p = document.add_paragraph('', style='List Bullet')
-    p.add_run().font.name = 'Fira Mono'
+    p.add_run().font.name = 'Noto Sans'
     p.add_run().font.size = Pt(9)
 
     #create table

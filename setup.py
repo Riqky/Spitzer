@@ -13,5 +13,5 @@ setup(
     {'console_scripts': ['spitzer = Spitzer.main:main']},
     install_requires=['xmltodict==0.12.0', 'python-nmap==0.6.1', 'python-docx==0.8.10'],
     include_package_data=True,
-    package_data={'': ['*.json', 'Netwerkservices.docx']}
+    package_data={'': ['*.json', 'Netwerkservices.docx', 'logo.png']}
 )  

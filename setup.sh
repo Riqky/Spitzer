@@ -7,7 +7,6 @@
 
 
 #TODO maybe first check for pip and python version
-#TODO lock package version!
 pip3 install . 
 
 
