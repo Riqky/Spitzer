@@ -43,10 +43,7 @@ class Command(cmd.Cmd):
 '''
     prompt = '> '
     result = {} #TODO fix? when scan and exploit are run
-
-    def __init__(self):
-        cmd.Cmd.__init__(self)
-        config.set_ip(None)
+    config.set_ip(None)     
 
     def do_run(self, arg):
         '''runs both the scanner and the exploiter'''
@@ -61,6 +58,7 @@ class Command(cmd.Cmd):
             return
 
         result.save_hosts(self.result)
+        self.do_export(os.getcwd() + '/results.json')
         #print result (mainly for testing)
         for host, value in self.result.items():
             print(host + ':')
@@ -81,7 +79,7 @@ class Command(cmd.Cmd):
         '''shows the config.'''
         config.print_config()
 
-    def do_set(self, arg):
+    def do_set(self, arg):#TODO use quotes for spaces etc
         '''set the value by the given key'''
         args = arg.split(' ')
         config.set_value(args)
@@ -115,7 +113,43 @@ class Command(cmd.Cmd):
         pass
     
     def do_export(self, arg):
-        pass#export()
+        '''exports the results to a file
+        usage: export <filetype> <path>
+        if path is omitted the current dir is used
+        options are: json, text, sqlite, docx'''
+        
+        '''if arg == '':
+            print_error('Missing filetype')
+            return
+        
+        args = arg.split(' ')
+        type = args[0]
+        path = os.getcwd()
+        if len(args) > 1:
+            path = args[1]
+        
+        #check if path exsists
+        if not os.path.exists(path):
+            print_error('Cannot find path')
+            return
+
+        if os.path.isfile(path):
+            print_warning('This file already exists, do you want to overwrite? y/n [n]')
+            inp = input()
+            while inp != 'y' | inp != 'n' | inp != '':
+                print_warning('What did you say?')
+                inp = input()
+            if inp == 'n' | inp == '':
+                return
+        if '''
+            
+        #to json
+        f = open(arg, 'a+')
+        f.write(json.dumps(self.result))
+        f.close()
+
+    def do_import(self, arg):
+        self.result = json.loads(open(arg, 'r').read())
 
 def main():
     global first
