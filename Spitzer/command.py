@@ -27,4 +27,8 @@ def run(cmd, capture_output=False, check=True, verbose=None):
         print_error('Error in executing ' + cmd[0])#TODO logging?
         #print(process)
 
-    return process.communicate()[0].decode("utf-8")
+    r = process.communicate()[0]
+    if r is not None: #TODO check if bytes, instead of none
+        return r.decode("utf-8")
+    else:
+        return r
