@@ -4,7 +4,7 @@ Spitzer is a *Day Zero Scanner* for a pentest. The idea of the scanner is to cha
 
 ## Getting Started
 
-Spitzer was developed on [Kali 2019.3](https://www.kali.org/downloads/) with [Python 3.7.3](https://www.python.org/downloads/). Spitzer makes use of a lot of pre-installed tools on kali, so I recommend to only use this on kali. If you want to use another Linux-dist, there is a list of used tools at the bottom.
+Spitzer was developed on [Kali 2019.4](https://www.kali.org/downloads/) with [Python 3.7.3](https://www.python.org/downloads/). Spitzer makes use of a lot of pre-installed tools on kali, so I recommend to only use this on kali. If you want to use another Linux-dist, there is a list of used tools at the bottom.
 
 ## Installing
 
@@ -40,7 +40,7 @@ this runs both the exploit and the scan command.
 
 - **exit**
 
-Quits the shell (and runs a clean-up, thu preferred over closing the window)
+Exits the application gracefully
 
 - **exploit**
 
@@ -99,6 +99,23 @@ Example:
 "http":["websploit"]
 "ftp":["ftp", "ftp-anon"]
 ```
+
+## Used tools
+
+The follwing tools are currently used by Spitzer, non-Kali tools are installed by `setup.sh`. The rest you'll need to install manualy if you want to use Spitzer outside of Kali.
+
+- Nmap
+- Masscan
+- ftp
+- smbmap
+- searchsploit
+
+Not in Kali, and thus installed by `setup.sh`:
+
+- Gobuster
+- securityheaders</span>.py <!--span is a weird trick to prevent them being hyperlinks-->
+- aquatone
+- testssl</span>.sh
 
 ## Acknowledgements
 

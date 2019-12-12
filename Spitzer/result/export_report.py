@@ -4,10 +4,12 @@ from datetime import date
 
 from Spitzer.print import print_error
 from Spitzer.config.config import get_path
+from Spitzer.result import result
 
-def export(hosts):
+def export(path):
     #TODO  sort for big range
 
+    hosts = result.get_hosts()
     #sort ips
     ips = list(hosts.keys())
     ips = sorted(ips, key=lambda x:tuple(map(int, x.split('.'))))
@@ -80,7 +82,7 @@ def export(hosts):
 
             #if service is known but not the type
             elif data[0] != '' and data[1] == '':
-                current_row.cells[2].text = 'A ' + data[0] + 'service is online.'
+                current_row.cells[2].text = 'A ' + data[0] + ' service is online.'
             
             #if type is known
             elif data[1] != '':
@@ -90,17 +92,17 @@ def export(hosts):
                 #uuhhhmm... wtf?!
                 print_error('Something went terrebly wrong......')
 
-            #change font of table
-            for row in table.rows:
-                for cell in row.cells:
-                    paragraphs = cell.paragraphs
-                    for p in paragraphs:
-                        for run in p.runs:
-                            font = run.font
-                            font.name = 'Noto Sans'
+    #change font of table
+    for row in table.rows:
+        for cell in row.cells:
+            paragraphs = cell.paragraphs
+            for p in paragraphs:
+                for run in p.runs:
+                    font = run.font
+                    font.name = 'Noto Sans'
 
-            #save document
-            document.save('report.docx')
+    #save document
+    document.save(path)
 
 
 

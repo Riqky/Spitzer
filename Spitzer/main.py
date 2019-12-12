@@ -3,11 +3,12 @@ import subprocess, shlex
 import os
 import json
 import sys
+import shlex
 
 from Spitzer import searchsploit, exit 
 from Spitzer.scanner import scanner
 from Spitzer.config import config
-from Spitzer.result import result
+from Spitzer.result import result, export_report, export_sql, export_table, export_text
 from Spitzer.exploiters.exploit import exploit
 from Spitzer.print import print_error, print_warning
 
@@ -50,7 +51,7 @@ class Command(cmd.Cmd):
         self.do_scan('')
         self.do_exploit('')
 
-    def do_scan(self, arg):
+    def do_scan(self, arg):#TODO crash when nothing is found #TODO fix bad stdin after nmap error
         '''runs only scanner on the ip(s) given in the config'''
         self.result = scanner.scan()
 
@@ -58,7 +59,7 @@ class Command(cmd.Cmd):
             return
 
         result.save_hosts(self.result)
-        self.do_export(os.getcwd() + '/results.json')
+        self.do_export('json')
         #print result (mainly for testing)
         for host, value in self.result.items():
             print(host + ':')
@@ -75,13 +76,17 @@ class Command(cmd.Cmd):
          #   searchsploit.find(host, self.result)
         exploit(self.result)
 
-    def do_options(self, arg):
+    def do_options(self, arg):#TODO wrapping
         '''shows the config.'''
         config.print_config()
 
-    def do_set(self, arg):#TODO use quotes for spaces etc
+    def do_set(self, arg):
         '''set the value by the given key'''
-        args = arg.split(' ')
+        try:
+            args = shlex.split(arg)
+        except Exception as e:
+            print_error(e)
+            return
         config.set_value(args)
 
     def complete_set(self, text, line, begidx, endidx):
@@ -112,17 +117,17 @@ class Command(cmd.Cmd):
     def emptyline(self):
         pass
     
-    def do_export(self, arg):
+    def do_export(self, arg): #TODO export with timestap to prevent overwriting
         '''exports the results to a file
         usage: export <filetype> <path>
         if path is omitted the current dir is used
         options are: json, text, sqlite, docx'''
         
-        '''if arg == '':
+        if arg == '':
             print_error('Missing filetype')
             return
         
-        args = arg.split(' ')
+        args = shlex.split(arg)
         type = args[0]
         path = os.getcwd()
         if len(args) > 1:
@@ -133,23 +138,58 @@ class Command(cmd.Cmd):
             print_error('Cannot find path')
             return
 
+
         if os.path.isfile(path):
             print_warning('This file already exists, do you want to overwrite? y/n [n]')
-            inp = input()
-            while inp != 'y' | inp != 'n' | inp != '':
+            inp = input().lower()
+            while inp != 'y' and inp != 'n' and inp != '':
                 print_warning('What did you say?')
-                inp = input()
-            if inp == 'n' | inp == '':
+                inp = input().lower()
+            if inp == 'n' or inp == '':
                 return
-        if '''
-            
-        #to json
-        f = open(arg, 'a+')
-        f.write(json.dumps(self.result))
-        f.close()
+        else:
+            if not path.endswith('/'):
+                path += '/'
+            path += 'results.' + type
+            print(path)
+        
+        if type == 'json':    
+            print(self.result)                  
+            f = open(path, 'w+')
+            f.write(json.dumps(self.result))
+            f.close()
+            result.export_vulns()
+        elif type == 'text':
+            export_text.export(path)
+        elif type == 'docx':
+            export_table.export(path)
+            export_report.export(path)
+        elif type == 'sqlite':
+            export_sql.Export(path)
+        else:
+            print_error('Unknown filetype!')
+            return
 
-    def do_import(self, arg):
-        self.result = json.loads(open(arg, 'r').read())
+    def do_import(self, arg):#TODO overwrite after opening bug?
+        try:
+            self.result = json.loads(open(arg, 'r').read())
+        except FileNotFoundError:
+            print_error('File is not found')
+
+    def complete_import(self, text, line, begidx, endidx):
+        text = ' '.join(line.split(' ')[1:])
+        files = None
+        if text.startswith('/'):
+            files = '/'.join(text.split('/')[:-1])
+            if files == '':
+                files = '/'
+            files = os.listdir(files)          
+        else:
+            files =  os.listdir(os.getcwd() + '/' + '/'.join(text.split('/')[:-1]))
+        return [i for i in files if i.startswith(text.split('/')[-1]) and not i.startswith('.')]
+
+    def do_print(self, arg):
+        print(self.result)
 
 def main():
     global first
@@ -163,7 +203,7 @@ def main():
         first = False
         main()
     except:
-        exit.quit()
+        exit.quit(True)
         raise
 
 if __name__ == "__main__":

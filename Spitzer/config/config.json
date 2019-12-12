@@ -7,5 +7,6 @@
     "verbose": ["2", "The verbosity of the tools. Options: -1, 0, 1 etc. -1 is no output, anything above 0 is the amount of added v's"],
     "times": ["2","Amount of times to run Masscan"],
     "rate": ["10000", "Rate for Masscan to use"],
-    "threads": ["5", "The amount of threads the multiprocessed tool use"]
+    "threads": ["5", "The amount of threads the multiprocessed tool use"],
+    "categories":["safe", "safe, heavy and/or intrusive. Defines how heavy the exploits can go"]
 }

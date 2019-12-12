@@ -3,12 +3,14 @@
 #gobuster
 #securityheaders.py
 #testssl.sh
-#interlace?
 
 
-#TODO maybe first check for pip and python version
-pip3 install . 
-
+if [ ! -z `which pip3` ]; then
+    pip3 install . 
+else
+    echo -e '\033[1;31m[!] ERROR: No pip3 installed!\033[0;0m'
+    exit 1
+fi
 #if /tmp/spitzer exsists, stop the script
 if [ -d "/opt/spitzer/" ]; then
     exit 0

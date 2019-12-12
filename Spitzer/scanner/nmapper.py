@@ -42,8 +42,10 @@ def scan(hosts):
         if script != '':
             arguments.append(script)
         command.run(arguments, verbose=int(config.get_config('verbose')))
-
+    
     return get_results()
+
+
 
 def get_results():
     result = {}
@@ -56,7 +58,12 @@ def get_results():
 
     for file in os.listdir(get_path()):
         if file.startswith('scan_') and file.endswith('.xml'):
-            xml_result = parse_xml(open(get_path() + file, 'r').read())
+            try:
+                xml_result = parse_xml(open(get_path() + file, 'r').read())
+            except nmap.PortScannerError:
+                print_error('Error with scanning host: ' + file.replace('scan_', '').replace('.xml', ''))
+                continue
+
             host = file.replace('scan_', '').replace('.xml', '')
             result[host] = xml_result['scan'][host]
             f = open('xml/' + file, 'a+')

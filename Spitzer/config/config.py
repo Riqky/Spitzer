@@ -53,8 +53,17 @@ def printdict(diction):
     print()
 
 def set_value(args):
+    if len(args) < 2:
+        print_error('Not enough values')
+        return
+
+    
     key = args[0]
     value = args[1]
+
+    if len(args) > 2:
+        args.pop(0)
+        value = ' '.join(args)
     
     if key == 'interface':
         set_ip(value)

@@ -3,8 +3,10 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 from Spitzer.config import config
+from Spitzer.result import result
 
-def export(hosts):
+def export(path):
+    hosts = result.get_hosts()
     ips = list(hosts.keys())
     ips = sorted(ips, key=lambda x:tuple(map(int, x.split('.'))))
     ports = _get_ports(hosts)
@@ -60,7 +62,7 @@ def export(hosts):
                     font = run.font
                     font.name = 'Noto Sans'
 
-    document.save('result.docx')
+    document.save(path)
 
         
 
