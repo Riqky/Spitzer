@@ -51,7 +51,7 @@ class Command(cmd.Cmd):
         self.do_scan('')
         self.do_exploit('')
 
-    def do_scan(self, arg):#TODO crash when nothing is found #TODO fix bad stdin after nmap error
+    def do_scan(self, arg):
         '''runs only scanner on the ip(s) given in the config'''
         self.result = scanner.scan()
 
@@ -154,7 +154,6 @@ class Command(cmd.Cmd):
             print(path)
         
         if type == 'json':    
-            print(self.result)                  
             f = open(path, 'w+')
             f.write(json.dumps(self.result))
             f.close()
@@ -196,7 +195,7 @@ def main():
     try:
         c = Command()
         if not first:
-            c.intro = '\n'
+            c.intro = '\r'
         c.cmdloop()
 
     except KeyboardInterrupt:

@@ -7,7 +7,7 @@ from Spitzer.print import print_error
 
 #runs shell command
 
-def run(cmd, capture_output=False, check=True, verbose=None):
+def run(cmd, capture_output=False, check=True, verbose=None):#TODO fix verbose to be boolean
     print(cmd)
     if verbose is not None:
         if verbose == -1:

@@ -4,6 +4,7 @@ import multiprocessing
 import datetime
 import re
 import time
+from tqdm import tqdm
 
 from Spitzer.config import config
 from Spitzer.print import print_error
@@ -28,12 +29,15 @@ def run_nmap(ip, ports):
 
     if script != '':
         cmd += script
-    command.run(cmd, verbose=int(config.get_config('verbose')))
+    result = command.run(cmd, capture_output=True, verbose=int(config.get_config('verbose')))
+    if '0 hosts up' in result:
+        print_error('Nothing found')
+        return None
     return get_results()
 
 def scan(hosts):
     print('[-] Starting nmap')
-    for host, ports in hosts.items():
+    for host, ports in tqdm(hosts.items()):
         script = find_scripts(ports)
         txt = ['-oN', get_path() + 'scan_' + host + '.txt'] #TODO Fix working with hostnames
         xml = ['-oX', get_path() + 'scan_' + host + '.xml']
@@ -42,7 +46,6 @@ def scan(hosts):
         if script != '':
             arguments.append(script)
         command.run(arguments, verbose=int(config.get_config('verbose')))
-    
     return get_results()
 
 
@@ -62,6 +65,7 @@ def get_results():
                 xml_result = parse_xml(open(get_path() + file, 'r').read())
             except nmap.PortScannerError:
                 print_error('Error with scanning host: ' + file.replace('scan_', '').replace('.xml', ''))
+                os.system('stty sane')
                 continue
 
             host = file.replace('scan_', '').replace('.xml', '')
