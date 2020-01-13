@@ -33,7 +33,9 @@ if [ -z `which gobuster` ]; then
 fi
 
 #securityheaders.py
-wget https://raw.githubusercontent.com/juerkkil/securityheaders/master/securityheaders.py -P /opt/spitzer/ 
+if [ ! -f "/opt/spitzer/securityheaders.py" ]; then
+    wget https://raw.githubusercontent.com/juerkkil/securityheaders/master/securityheaders.py -P /opt/spitzer/ 
+fi
 
 #testssl.sh
 git clone  https://github.com/drwetter/testssl.sh /opt/spitzer/testssl
