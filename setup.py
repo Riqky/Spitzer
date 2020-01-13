@@ -14,7 +14,8 @@ class InstallScripts(install):
 
 
 setup(
-    name='Spitzer',
+    cmdclass={'install': InstallScripts},
+    name='SpitzerSec',
     version='0.1',
     description='A scanner for the first day of a pentest',
     long_description=long_desc,
@@ -25,5 +26,5 @@ setup(
     install_requires=['xmltodict==0.12.0', 'python-nmap==0.6.1', 'python-docx==0.8.10', 'beautifulsoup4==4.8.1', 'requests==2.22.0', 'tqdm==4.40.2'],
     include_package_data=True,
     package_data={'': ['*.json', 'Netwerkservices.docx', 'logo.png']},
-    cmdclass={'install': InstallScripts}
+    download_url='https://github.com/Riqky/Spitzer/archive/0.1.tar.gz'
 )  
