@@ -11,18 +11,19 @@ def find(host, nmap):
             continue
 
         result = command.run(['searchsploit', product, version], True)
-        result = result.stdout
 
         #found no sploits
-        if 'Exploits: No Result'in result and 'Shellcodes: No Result' in result:
+        if 'Exploits: No Result' in result and 'Shellcodes: No Result' in result:
             continue
 
         #count found sploits
         count = 0
         for line in result.splitlines():
-            if '--------' in line or 'Exploit Title' in line or 'No Result' in line  or '(/usr/share/exploitdb/)' in line:
+
+            if '--------' in line or 'Exploit Title' in line or 'No Result' in line or '(/usr/share/exploitdb/)' in line:
                 continue
             else:
+                print(line)
                 count += 1
 
         s = ''

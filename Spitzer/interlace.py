@@ -7,8 +7,6 @@ from Spitzer.chache.chache import get_path
 
 
 def run(command, hosts, ports=None):
-
-    print('P ' + ports)
     #get stuff from config
     threads = get_config('threads')
 
@@ -20,9 +18,7 @@ def run(command, hosts, ports=None):
     cmd = ['interlace', '-threads', threads, '-cL', path+'commands.txt', '-tL', path+'targets.txt', '-o', get_path() ] 
 
     if ports is not None:
-        print('added ' + ports)
         cmd += ['-p', ports]
-    print(cmd)
     execute(cmd)
 
 def execute(command):
@@ -37,7 +33,6 @@ def execute(command):
             print(output, end='\r')
 
     print('\n')
-    #time.sleep(60)
     sys.stdin = sys.__stdin__
 
 def convert(var, typ=list, seperator=',', path=None):

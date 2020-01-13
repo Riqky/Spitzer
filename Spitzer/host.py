@@ -68,18 +68,22 @@ def merge_missed(result, missed):
         else:
             result[host] = ports
 
+    return sort(result)
+
+def sort(result):
+    for value in result.items():
+        value[1].sort(key=int)
     return result
 
 def get_interfaces():
     interfaces = {}
 
     interface = None
-    cmd = ['ifconfig']
+    cmd = ['ip', 'addr']
     result = command.run(cmd, True)
-    for line in result.splitlines(0):
+    for line in result.splitlines():
         if not line.startswith(' '):
-            interface = line.split(':')[0]
-            #interfaces[interface] = ''
+            interface = line.split(':')[1].replace(' ','')
 
         if line == '':
             interface = None
@@ -87,12 +91,7 @@ def get_interfaces():
         if 'inet ' in line and interface is not None:
             parts = list(filter(None, line.split(' ')))
             ip = parts[1]
-            netmask = parts[3]
-            range = sum(bin(int(x)).count('1') for x in netmask.split('.'))
-            ip = ip.split('.')
-            ip = ip[0] +'.'+ ip[1] +'.'+ ip[2] +'.'+ '0'
-            range = ip + '/' + str(range)
-            interfaces[interface] = range
+            interfaces[interface] = ip
     return interfaces
 
 def get_hosts(dic):

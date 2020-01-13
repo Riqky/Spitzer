@@ -1,29 +1,27 @@
 {
-    "ports":{
-        "21":["ftp", "ftp-anon"],
-        "22":[""],
-        "23":[""],
-        "25":[""],
-        "80":[""],
-        "111":["netdisk", "nfs-showmount"],
-        "139":["netdisk"],
-    	"443":[""],        
-        "445":["netdisk"]
+    "services":{
+        "ftp":["ftp", "ftp-anon"],
+        "ssh":[""],
+        "telnet":[""],
+        "smtp":[""],
+        "http":["websploit"],
+        "rpcbind":["netdisk", "nfs-showmount"],
+        "netbios-ssn":["netdisk"],
+    	"https":["websploit"],        
+        "microsoft-ds":["netdisk"]
         
     },
 
     "web":[
-        "dirbuster",
-        "nikto",
-        "testssl",
-        "zap"
+        "spider",
+        "headers",
+        "testssl"
     ],
 
-    "zap":[
-        "spider",
-        "scan",
-        "export"
-    ],
+    "extensions":{
+        "apache":"html,php",
+        "iis":"asp"
+    },
 
     "queries":{
         "host":"CREATE TABLE IF NOT EXISTS host ( id interger PRIMARY KEY, ip text)",
@@ -32,8 +30,9 @@
     },
 
     "dirbust": "True",
-    "testssl": "/opt/testssl.sh/testssl.sh",
+    "testssl": "/opt/spitzer/testssl/testssl.sh",
     "burp": "/opt/BurpSuitePro/burpsuite_pro.jar",
+    "securityheaders":"/opt/spitzer/securityheaders.py",
     "busterlist": {
         "common": "/usr/share/dirb/wordlists/common.txt",
         "big": "/usr/share/dirb/wordlists/big.txt",

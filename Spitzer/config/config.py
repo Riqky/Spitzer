@@ -1,4 +1,5 @@
 import json
+
 from Spitzer.host import get_interfaces
 from Spitzer.print import print_error, print_warning
 
@@ -15,6 +16,7 @@ def get_data(key):
     try: 
         return data[key]
     except KeyError:
+        print_error('[!] key not found!')
         return None
 
 def get_config(key):
@@ -27,7 +29,9 @@ def get_config(key):
         else:
             return value
 
-    except KeyError:
+    except KeyError as e:
+        print(e)
+        print_error('[!] key not found!')
         return None
 
 def set_config(key, value):
@@ -49,8 +53,17 @@ def printdict(diction):
     print()
 
 def set_value(args):
+    if len(args) < 2:
+        print_error('Not enough values')
+        return
+
+    
     key = args[0]
     value = args[1]
+
+    if len(args) > 2:
+        args.pop(0)
+        value = ' '.join(args)
     
     if key == 'interface':
         set_ip(value)
@@ -89,3 +102,4 @@ def set_ip(interface):
         return
 
     set_value(['ip', interfaces[interface]])
+    print_warning('Changed IP to ' + interfaces[interface])

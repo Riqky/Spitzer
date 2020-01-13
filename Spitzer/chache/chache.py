@@ -3,8 +3,8 @@
 #(will be cleared after the program is done)
 
 import os
-from shutil import copyfile
 
+from Spitzer.print import print_error
 
 path = __file__[:-9]
 
@@ -15,18 +15,15 @@ def create_file(name, content=''):
 def read_file(name):
     try:
         return open(path + name, 'r').read()
-    except OSError:
+    except OSError as e:
+        print_error(e.strerror)
         return ''
 
 def remove_file(name):
-    if not os.path.exists(path + name):
+    try:
         os.remove(path + name)
-
-def move_to_current(name):
-    src = os.path.realpath(path + name)
-    dst = os.getcwd() + '/' + name
-    copyfile(src, dst)
-    print('[-] Placed '+name+' in ' + dst)
+    except:
+        pass
 
 def clear(): #clears Spitzer/chache on exit
     for file in os.listdir(path):

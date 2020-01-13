@@ -2,11 +2,13 @@ import subprocess
 import os
 
 from Spitzer.config import config
+from Spitzer.print import print_error
 
 
 #runs shell command
-def run(command, capture_output=False, check=True, verbose=None):
-    #print(command)
+
+def run(cmd, capture_output=False, check=True, verbose=None):#TODO fix verbose to be boolean
+    print(cmd)
     if verbose is not None:
         if verbose == -1:
             capture_output = True
@@ -14,18 +16,19 @@ def run(command, capture_output=False, check=True, verbose=None):
             v = '-'
             for _ in range(verbose):
                 v += 'v'
-            command.append(v)
+            cmd.append(v)
 
-    #if capture_output is True, print doens't work, sadly...
-    return subprocess.run(command, capture_output=capture_output, check=check, text=True, bufsize=100000).stdout
-
-'''def run(command, capture_output=False, check=True):
     pipe = None
     if capture_output:
         pipe = subprocess.PIPE
-    process = subprocess.Popen(command, stdout=pipe, text=True, bufsize=1000000)
+    process = subprocess.Popen(cmd, stdout=pipe, bufsize=1000000)
     code = process.wait()
     if check and code != 0:
-        raise RuntimeError('errorcode ' + str(code)) #TODO make custom exceptions
+        print_error('Error in executing ' + cmd[0])#TODO logging?
+        #print(process)
 
-    return process.stdout'''
+    r = process.communicate()[0]
+    if r is not None: #TODO check if bytes, instead of none
+        return r.decode("utf-8")
+    else:
+        return r

@@ -24,38 +24,48 @@ def scan():
     #or you can add your own ports
     ports = ''
     if scan == 'list':
-        port = config.get_data('ports')
+        port = config.get_data('services')
         for p in port:
             ports += str(p) + ','
-        ports = ports[:-1] #remove last comma
+        ports = '-p' + ports[:-1] #remove last comma
     elif scan == 'all':
-        ports = '0-65535'
+        ports = '-p 0-65535'
     elif scan == 'top1':
-        ports = '--top-ports 1000'
+        ports = '--top-ports=1000'
     elif scan == 'top10':
-        ports = '--top-ports 10000'
+        ports = '--top-ports=10000'
     else:
-        ports = scan
+        ports = '-p' + scan
 
     #run masscan x times
     #get results from masscan and create one list of hosts with ports
-    result = {}
-    for i in range(times):
-        print('[-] Starting Masscan ' + str(i+1))
-        masscanner.scan(hosts, ports, rate)
-        xml = chache.read_file('sweep.xml')
-        if xml == '':
-            print_error('Scan '+str(i+1)+' failed!')
-            print_error('Are there any hosts up? Is the interface correct?')
-            return
+    if times != 0:
+        result = {}
+        for i in range(times):
+            print('[-] Starting Masscan ' + str(i+1))
+            masscanner.scan(hosts, ports, rate)
+            xml = chache.read_file('sweep.xml')
+            if xml == '':
+                print_error('Scan '+str(i+1)+' failed! running nmap')
+                return nmapper.run_nmap(hosts, ports)
 
-        print('[-] Masscan '+str(i+1)+' done')
+            print('[-] Masscan '+str(i+1)+' done')
 
-        mass = json.loads(json.dumps(xmltodict.parse(xml, attr_prefix='')))
-        result = host.merge(mass, result)
-        chache.remove_file('sweep.xml')
-        
-    #run nmap once to confirm scan (masscan has some false positives)
-    return nmapper.scan(result)
+            mass = json.loads(json.dumps(xmltodict.parse(xml, attr_prefix='')))
+            result = host.merge(mass, result)
+            chache.remove_file('sweep.xml')
+            
+        #run nmap once to confirm scan (masscan has some false positives)
 
+        print('[*] All masscans are done, found: ')
+        #ugly lil sort method
+        r = []
+        for h in result:
+            r.append(h)
+        r.sort()
+        for h in r:
+            print(r)
 
+        return nmapper.scan(result)
+    else:
+        return nmapper.run_nmap(hosts, ports)
