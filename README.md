@@ -4,7 +4,7 @@ Spitzer is a *Day Zero Scanner* for a pentest. The idea of the scanner is to cha
 
 ## Getting Started
 
-Spitzer was developed on [Kali 2019.3](https://www.kali.org/downloads/) with [Python 3.7.3](https://www.python.org/downloads/). Spitzer makes use of a lot of pre-installed tools on kali, so I recommend to only use this on kali. If you want to use another Linux-dist, there is a list of used tools at the bottom.
+Spitzer was developed on [Kali 2019.3](https://www.kali.org/downloads/) with [Python 3.7.3](https://www.python.org/downloads/). Spitzer makes use of a lot of pre-installed tools on kali, so I recommend to only use this on kali. If you want to use another Linux-dist, (here is a list of the tools)[https://github.com/riqky/spitzer/wiki/tools].
 
 ## Installing
 
