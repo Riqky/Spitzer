@@ -16,7 +16,7 @@ class InstallScripts(install):
 setup(
     cmdclass={'install': InstallScripts},
     name='SpitzerSec',
-    version='0.1.4',
+    version='0.1.5',
     description='A scanner for the first day of a pentest',
     long_description=long_desc,
     author='Rick Theeuwes',
@@ -27,6 +27,6 @@ setup(
     include_package_data=True,
     package_data={'': ['*.json', 'Netwerkservices.docx', 'logo.png']},
     download_url='https://github.com/Riqky/Spitzer/archive/0.1.2.tar.gz',
-    data_files=[('', ['*.json'])],
+    data_files=[('configs', ['Spitzer/chache/*.json', 'Spitzer/config/*.json'])],
     long_description_content_type='text/markdown'
 )  
