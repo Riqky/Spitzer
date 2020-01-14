@@ -46,18 +46,18 @@ chmod +x /opt/spitzer/*
 mass=`masscan --version`
 massversion=${mass:16:6}
 massnum=`echo "$massversion" | tr -d .`
-if [ $massnum -lt 106 ]; then
-    read -p "Masscan appears to be outdated, do you want to reinstall it? y/n [y] " yn
-    case $yn in
-        [Nn]* ) rm -r /tmp/spitzer; exit;;
-        * )
+#if [ $massnum -lt 106 ]; then
+#    read -p "Masscan appears to be outdated, do you want to reinstall it? y/n [y] " yn
+#    case $yn in
+#        [Nn]* ) rm -r /tmp/spitzer; exit;;
+#        * )
             #remove current version
             loc=`which masscan`
             rm $loc
             git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
             cd /tmp/spitzer/masscan; make -j
             mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/;;
-    esac
-fi
+#    esac
+#fi
 
 rm -r /tmp/spitzer
