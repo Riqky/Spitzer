@@ -16,7 +16,7 @@ class InstallScripts(install):
 setup(
     cmdclass={'install': InstallScripts},
     name='SpitzerSec',
-    version='0.1',
+    version='0.1.1',
     description='A scanner for the first day of a pentest',
     long_description=long_desc,
     author='Rick Theeuwes',
