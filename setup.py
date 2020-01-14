@@ -26,7 +26,7 @@ setup(
     install_requires=['xmltodict==0.12.0', 'python-nmap==0.6.1', 'python-docx==0.8.10', 'beautifulsoup4==4.8.1', 'requests==2.22.0', 'tqdm==4.40.2'],
     include_package_data=True,
     package_data={'': ['*.json', 'Netwerkservices.docx', 'logo.png']},
-    download_url='https://github.com/Riqky/Spitzer/archive/0.1.2.tar.gz',
-    data_files=[('configs', ['Spitzer/chache/*.json', 'Spitzer/config/*.json'])],
+    download_url='https://github.com/Riqky/Spitzer/archive/0.1.5.tar.gz',
+    data_files=[('configs', ['Spitzer/config/config.json', 'Spitzer/config/data.json'])],
     long_description_content_type='text/markdown'
 )  
