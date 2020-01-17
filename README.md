@@ -8,7 +8,13 @@ Spitzer was developed on [Kali 2019.3](https://www.kali.org/downloads/) with [Py
 
 ## Installing
 
-Clone the project and install it:
+Install it with Pip:
+
+```bash
+pip3 install spitzersec
+```
+
+Or clone the project and install it:
 
 ```bash
 git clone https://github.com/Riqky/Spitzer
