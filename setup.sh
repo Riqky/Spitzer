@@ -56,7 +56,7 @@ massnum=`echo "$massversion" | tr -d .`
             rm $loc
             git clone https://github.com/robertdavidgraham/masscan /tmp/spitzer/masscan
             cd /tmp/spitzer/masscan; make -j
-            mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/;;
+            mv /tmp/spitzer/masscan/bin/masscan /usr/local/bin/
 #    esac
 #fi
 
