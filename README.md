@@ -19,7 +19,7 @@ Or clone the project and install it:
 ```bash
 git clone https://github.com/Riqky/Spitzer
 cd Spitzer
-./install.sh
+./setup.sh
 ```
 
 and then start the script to get the interactive shell:
