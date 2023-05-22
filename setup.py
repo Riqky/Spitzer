@@ -23,7 +23,7 @@ setup(
     packages=find_packages(),
     entry_points=
     {'console_scripts': ['spitzer = Spitzer.main:main']},
-    install_requires=['xmltodict==0.12.0', 'python-nmap==0.6.1', 'python-docx==0.8.10', 'beautifulsoup4==4.8.1', 'requests==2.22.0', 'tqdm==4.40.2'],
+    install_requires=['xmltodict==0.12.0', 'python-nmap==0.6.1', 'python-docx==0.8.10', 'beautifulsoup4==4.8.1', 'requests==2.31.0', 'tqdm==4.40.2'],
     include_package_data=True,
     package_data={'': ['*.json', 'Netwerkservices.docx', 'logo.png']},
     download_url='https://github.com/Riqky/Spitzer/archive/0.1.6.tar.gz',
